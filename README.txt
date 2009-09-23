@@ -1,14 +1,11 @@
-reStructuredText for PEPs
-=========================
+reStructuredText for PSEPs
+==========================
 
-Original PEP source may be written using two standard formats, a
-mildly idiomatic plaintext format and the reStructuredText format
-(also, technically plaintext).  These two formats are described in PEP
-9 and PEP 12 respectively.  The pep2html.py processing and
-installation script knows how to produce the HTML for either PEP
-format.  A local copy of the Docutils package is included for
-processing reStructuredText PEPs.
+Original PSEP source should be written using the reStructuredText format
+(technically plaintext).  This format is described in PSEP 12.
+The pep2html.py processing and installation script knows how to produce the
+HTML for the PSEP files.  A local copy of the Docutils package is included
+for processing reStructuredText PSEPs.
 
 Please report any problems or questions to
-docutils-develop@lists.sourceforge.net or to David Goodger
-(goodger@python.org).
+Matti Airas <matti.p.airas@nokia.com>.

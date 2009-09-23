@@ -1,0 +1,463 @@
+PSEP: 1
+Title: PSEP Purpose and Guidelines
+Last-Modified: $Date$
+Author: Matti Airas
+Status: Draft
+Type: Process
+Content-Type: text/x-rst
+Created: 23-Sep-2009
+
+
+What is a PSEP?
+===============
+
+PSEP stands for PySide Enhancement Proposal.  A PSEP is a design
+document providing information to the PySide community, or describing
+a new feature for PySide or its processes or environment.  The PSEP
+should provide a concise technical specification of the feature and a
+rationale for the feature.
+
+We intend PSEPs to be the primary mechanisms for proposing new
+features, for collecting community input on an issue, and for
+documenting the design decisions that have gone into PySide.  The PSEP
+author is responsible for building consensus within the community and
+documenting dissenting opinions.
+
+Because the PSEPs are maintained as text files in a versioned
+repository, their revision history is the historical record of the
+feature proposal [1]_.
+
+The whole PSEP process has been copied verbatim from Python's PEP (Python
+Enhancement Proposal) process.
+
+PSEP Types
+==========
+
+There are three kinds of PSEP:
+
+1. A **Standards Track** PSEP describes a new feature or implementation
+   for PySide.
+
+2. An **Informational** PSEP describes a PySide design issue, or
+   provides general guidelines or information to the PySide community,
+   but does not propose a new feature.  Informational PSEPs do not
+   necessarily represent a PySide community consensus or
+   recommendation, so users and implementors are free to ignore
+   Informational PSEPs or follow their advice.
+
+3. A **Process** PSEP describes a process surrounding PySide, or
+   proposes a change to (or an event in) a process.  Process PSEPs are
+   like Standards Track PSEPs but apply to areas other than the PySide
+   itself.  They may propose an implementation, but not to
+   PySide's codebase; they often require community consensus; unlike
+   Informational PSEPs, they are more than recommendations, and users
+   are typically not free to ignore them.  Examples include
+   procedures, guidelines, changes to the decision-making process, and
+   changes to the tools or environment used in Python development.
+   Any meta-PSEP is also considered a Process PSEP.
+
+
+PSEP Work Flow
+==============
+
+The PSEP editors assign PSEP numbers and change their status.  The
+current PSEP editor is Matti Airas.  Please send
+all PSEP-related email to <pyside@pyside.org> (no cross-posting please).
+Also see `PSEP Editor Responsibilities & Workflow`_ below.
+
+The PSEP process begins with a new idea for PySide.  It is highly
+recommended that a single PSEP contain a single key proposal or new
+idea.  The more focussed the PSEP, the more successful it tends to
+be.  The PSEP editor reserves the right to reject PSEP proposals if they
+appear too unfocussed or too broad.  If in doubt, split your PSEP into
+several well-focussed ones.
+
+Each PSEP must have a champion -- someone who writes the PSEP using the
+style and format described below, shepherds the discussions in the
+appropriate forums, and attempts to build community consensus around the
+idea.  The PSEP champion (a.k.a. Author) should first attempt to
+ascertain whether the idea is PSEP-able.  Posting to the
+pyside@pyside.org mailing list is recommended.  Enhancements not
+resulting in API changes usually don't need a PSEP and can be injected
+into the PySide development work flow with a patch submission to the
+PySide `issue tracker`_.
+
+The PSEP champion then emails the PSEP editor <pyside@pyside.org> with a
+proposed title and a rough, but fleshed out, draft of the PSEP.  This
+draft must be written in PSEP style as described below.
+
+If the PSEP editor approves, he will assign the PSEP a number, label it
+as Standards Track, Informational, or Process, give it status "Draft",
+and create and check-in the initial draft of the PSEP.  The PSEP editor
+will not unreasonably deny a PSEP.  Reasons for denying PSEP status
+include duplication of effort, being technically unsound, not providing
+proper motivation or addressing backwards compatibility, or not in
+keeping with the PySide philosophy.  The TBC (Temporary Benevolent
+Committee, consisting of the core dev team and Matti Airas) can be consulted
+during the approval phase, and is the final arbiter of the draft's
+PSEP-ability.
+
+If a pre-PSEP is rejected, the author may elect to take the pre-PSEP to
+the pyside@pyside.org mailing list to help flesh it out, gain feedback
+and consensus from the community at large, and improve the PSEP for
+re-submission.
+
+The author of the PSEP is then responsible for posting the PSEP to the
+community forums, and marshaling community support for it.  As updates
+are necessary, the PSEP author can check in new versions if they have
+SVN commit permissions, or can email new PSEP versions to the PSEP
+editor for committing.
+
+Standards Track PSEPs consist of two parts, a design document and a
+reference implementation.  The PSEP should be reviewed and accepted
+before a reference implementation is begun, unless a reference
+implementation will aid people in studying the PSEP.  Standards Track
+PSEPs must include an implementation -- in the form of code, a patch,
+or a URL to same -- before it can be considered Final.
+
+PSEP authors are responsible for collecting community feedback on a PSEP
+before submitting it for review.  A PSEP that has not been discussed on
+python-list@python.org and/or python-dev@python.org will not be
+accepted.  However, wherever possible, long open-ended discussions on
+public mailing lists should be avoided.  Strategies to keep the
+discussions efficient include: setting up a separate SIG mailing list
+for the topic, having the PSEP author accept private comments in the
+early design phases, setting up a wiki page, etc.  PSEP authors should
+use their discretion here.
+
+Once the authors have completed a PSEP, they must inform the PSEP editor
+that it is ready for review.  PSEPs are reviewed by the TBC, who may
+accept or reject a PSEP or send it back to the author(s) for revision.
+For a PSEP that is pre-determined to be acceptable (e.g., it is an
+obvious win as-is and/or its implementation has already been checked in)
+the TBC may also initiate a PSEP review, first notifying the PSEP
+author(s) and giving them a chance to make revisions.
+
+For a PSEP to be accepted it must meet certain minimum criteria.  It
+must be a clear and complete description of the proposed enhancement.
+The enhancement must represent a net improvement.  The proposed
+implementation, if applicable, must be solid and must not complicate the
+interpreter unduly.  Finally, a proposed enhancement must properly
+balance the "pythonicity" and "Qt-likeness" in order to be accepted by
+the TBC.  (However, "pythonic" and "Qt-likeness" are imprecise terms;
+they may be defined as whatever is acceptable to the TBC.  This logic is
+intentionally circular.)
+
+Once a PSEP has been accepted, the reference implementation must be
+completed.  When the reference implementation is complete and accepted
+by the TBC, the status will be changed to "Final".
+
+A PSEP can also be assigned status "Deferred".  The PSEP author or
+editor can assign the PSEP this status when no progress is being made
+on the PSEP.  Once a PSEP is deferred, the PSEP editor can re-assign it
+to draft status.
+
+A PSEP can also be "Rejected".  Perhaps after all is said and done it
+was not a good idea.  It is still important to have a record of this
+fact.
+
+PSEPs can also be replaced by a different PSEP, rendering the original
+obsolete.  This is intended for Informational PSEPs, where version 2 of
+an API can replace version 1.
+
+The possible paths of the status of PSEPs are as follows:
+
+.. image:: psep-0001-1.png
+
+Some Informational and Process PSEPs may also have a status of "Active"
+if they are never meant to be completed.  E.g. PSEP 1 (this PSEP).
+
+
+What belongs in a successful PSEP?
+==================================
+
+Each PSEP should have the following parts:
+
+1. Preamble -- RFC 822 style headers containing meta-data about the
+   PSEP, including the PSEP number, a short descriptive title (limited
+   to a maximum of 44 characters), the names, and optionally the
+   contact info for each author, etc.
+
+2. Abstract -- a short (~200 word) description of the technical issue
+   being addressed.
+
+3. Copyright/public domain -- Each PSEP must either be explicitly
+   labelled as placed in the public domain (see this PSEP as an
+   example) or licensed under the `Open Publication License`_.
+
+4. Specification -- The technical specification should describe the
+   syntax and semantics of any new API feature.  The
+   specification should be detailed enough to allow competing,
+   interoperable implementations for any of the current Python Qt
+   bindings.
+
+5. Motivation -- The motivation is critical for PSEPs that want to
+   change the PySide API.  It should clearly explain why the
+   existing API is inadequate to address the
+   problem that the PSEP solves.  PSEP submissions without sufficient
+   motivation may be rejected outright.
+
+6. Rationale -- The rationale fleshes out the specification by
+   describing what motivated the design and why particular design
+   decisions were made.  It should describe alternate designs that
+   were considered and related work, e.g. how the feature is supported
+   in other languages.
+
+   The rationale should provide evidence of consensus within the
+   community and discuss important objections or concerns raised
+   during discussion.
+
+7. Backwards Compatibility -- All PSEPs that introduce backwards
+   incompatibilities must include a section describing these
+   incompatibilities and their severity.  The PSEP must explain how the
+   author proposes to deal with these incompatibilities.  PSEP
+   submissions without a sufficient backwards compatibility treatise
+   may be rejected outright.
+
+8. Reference Implementation -- The reference implementation must be
+   completed before any PSEP is given status "Final", but it need not
+   be completed before the PSEP is accepted.  It is better to finish
+   the specification and rationale first and reach consensus on it
+   before writing code.
+
+   The final implementation must include test code and documentation
+   appropriate for either the PySide API reference or the respective
+   generator tool reference.
+
+
+PSEP Formats and Templates
+==========================
+
+As opposed to PEP, there is only one PSEP format available to authors:
+reStructuredText_.  ReStructuredText_ PSEPs allow for rich markup that
+is still quite easy to read, but results in much better-looking and more
+functional HTML.  PSEP 12 contains instructions and a template [4]_ for
+reStructuredText PSEPs.
+
+There is a Python script that converts PSEPs to HTML for
+viewing on the web [5]_.  reStructuredText PSEPs are parsed
+and converted by Docutils_ code called from the script.
+
+
+PSEP Header Preamble
+====================
+
+Each PSEP must begin with an RFC 822 style header preamble.  The headers
+must appear in the following order.  Headers marked with "*" are
+optional and are described below.  All other headers are required. ::
+
+    PSEP: <psep number>
+    Title: <psep title>
+    Last-Modified: <svn date string>
+    Author: <list of authors' real names and optionally, email addrs>
+  * Discussions-To: <email address>
+    Status: <Draft | Active | Accepted | Deferred | Rejected |
+             Withdrawn | Final | Replaced>
+    Type: <Standards Track | Informational | Process>
+  * Content-Type: <text/plain | text/x-rst>
+  * Requires: <psep numbers>
+    Created: <date created on, in dd-mmm-yyyy format>
+  * Python-Version: <version number>
+    Post-History: <dates of postings to python-list and python-dev>
+  * Replaces: <psep number>
+  * Replaced-By: <psep number>
+
+The Author header lists the names, and optionally the email addresses
+of all the authors/owners of the PSEP.  The format of the Author header
+value must be
+
+    Random J. User <address@dom.ain>
+
+if the email address is included, and just
+
+    Random J. User
+
+if the address is not given.  New PSEPs must use the mandated format
+above.
+
+If there are multiple authors, each should be on a separate line
+following RFC 2822 continuation line conventions.  Note that personal
+email addresses in PSEPs will be obscured as a defense against spam
+harvesters.
+
+While a PSEP is in private discussions (usually during the initial
+Draft phase), a Discussions-To header will indicate the mailing list
+or URL where the PSEP is being discussed.  No Discussions-To header is
+necessary if the PSEP is being discussed privately with the author, or
+on the pyside@pyside.org mailing list.  Note that email
+addresses in the Discussions-To header will not be obscured.
+
+The Type header specifies the type of PSEP: Standards Track,
+Informational, or Process.
+
+The format of a PSEP is specified with a Content-Type header.  The only
+acceptable values is "text/x-rst" for reStructuredText PSEPs (see PSEP
+12 [4]_).
+
+The Created header records the date that the PSEP was assigned a
+number, while Post-History is used to record the dates of when new
+versions of the PSEP are posted to python-list and/or python-dev.  Both
+headers should be in dd-mmm-yyyy format, e.g. 14-Aug-2001.
+
+TODO: How should we deal with different Python, Qt, and PySide versions?
+
+*Standards Track PSEPs must have a Python-Version header which indicates
+the version of Python that the feature will be released with.
+Informational and Process PSEPs do not need a Python-Version header.*
+
+PSEPs may have a Requires header, indicating the PSEP numbers that this
+PSEP depends on.
+
+PSEPs may also have a Replaced-By header indicating that a PSEP has been
+rendered obsolete by a later document; the value is the number of the
+PSEP that replaces the current document.  The newer PSEP must have a
+Replaces header containing the number of the PSEP that it rendered
+obsolete.
+
+
+Auxiliary Files
+===============
+
+PSEPs may include auxiliary files such as diagrams.  Such files must be
+named ``psep-XXXX-Y.ext``, where "XXXX" is the PSEP number, "Y" is a
+serial number (starting at 1), and "ext" is replaced by the actual
+file extension (e.g. "png").
+
+
+Reporting PSEP Bugs, or Submitting PSEP Updates
+===============================================
+
+How you report a bug, or submit a PSEP update depends on several
+factors, such as the maturity of the PSEP, the preferences of the PSEP
+author, and the nature of your comments.  For the early draft stages
+of the PSEP, it's probably best to send your comments and changes
+directly to the PSEP author.  For more mature, or finished PSEPs you may
+want to submit corrections to the PySide `issue tracker`_ so that your
+changes don't get lost.  If the PSEP author is a PySide developer, assign the
+bug/patch to him, otherwise assign it to the PSEP editor.
+
+When in doubt about where to send your changes, please check first
+with the PSEP author and/or PSEP editor.
+
+PSEP authors who have write permissions to the Gitorious repository can
+push the changes to the repository themselves.
+
+Transferring PSEP Ownership
+===========================
+
+It occasionally becomes necessary to transfer ownership of PSEPs to a
+new champion.  In general, we'd like to retain the original author as
+a co-author of the transferred PSEP, but that's really up to the
+original author.  A good reason to transfer ownership is because the
+original author no longer has the time or interest in updating it or
+following through with the PSEP process, or has fallen off the face of
+the 'net (i.e. is unreachable or not responding to email).  A bad
+reason to transfer ownership is because you don't agree with the
+direction of the PSEP.  We try to build consensus around a PSEP, but if
+that's not possible, you can always submit a competing PSEP.
+
+If you are interested in assuming ownership of a PSEP, send a message
+asking to take over, addressed to both the original author and the PSEP
+editor <pyside@pyside.org>.  If the original author doesn't respond to
+email in a timely manner, the PSEP editor will make a unilateral
+decision (it's not like such decisions can't be reversed :).
+
+
+PSEP Editor Responsibilities & Workflow
+=======================================
+
+A PSEP editor must subscribe to the <pyside@pyside.org> list.  All
+PSEP-related correspondence should be sent (or CC'd) to
+<pyside@pyside.org> (but please do not cross-post!).
+
+For each new PSEP that comes in an editor does the following:
+
+* Read the PSEP to check if it is ready: sound and complete.  The ideas
+  must make technical sense, even if they don't seem likely to be
+  accepted.
+
+* The title should accurately describe the content.
+
+* Edit the PSEP for language (spelling, grammar, sentence structure,
+  etc.), markup (for reST PSEPs), code style (examples should match PSEP
+  8 & 7).
+
+If the PSEP isn't ready, the editor will send it back to the author for
+revision, with specific instructions.
+
+Once the PSEP is ready for the repository, the PSEP editor will:
+
+* Assign a PSEP number (almost always just the next available number,
+  but sometimes it's a special/joke number, like 666 or 3141).
+
+* List the PSEP in PSEP 0 (in two places: the categorized list, and the
+  numeric list).
+
+* Add the PSEP to the Git repository. To clone a copy of the Git
+  repository, see `the PySide Gitorious page
+  <http://qt.gitorious.org/pyside>`_.
+
+* Monitor python.org to make sure the PSEP gets added to the site
+  properly.
+
+* Send email back to the PSEP author with next steps (post to
+  pyside@pyside.org).
+
+Updates to existing PSEPs also come in to pyside@pyside.org.
+Alternatively, Gitorious merge requests may be made directly.
+
+Many PSEPs are written and maintained by developers with write access to
+the PySide repository.  The PSEP editors monitor the repository PSEP
+changes, and correct any structure, grammar, spelling, or markup
+mistakes we see.
+
+The editors don't pass judgement on PSEPs.  We merely do the
+administrative & editorial part.  Except for times like this, there's
+relatively low volume.
+
+
+
+References and Footnotes
+========================
+
+.. [1] This historical record is available by the normal Git commands
+   for retrieving older revisions.  For those without direct access to
+   the Git tree, you can browse the current and past PSEP revisions here:
+   http://qt.gitorious.org/pyside/pseps
+
+.. [2] PSEP 2, Procedure for Adding New Modules, Faassen
+   (http://www.python.org/dev/peps/pep-0002)
+
+.. [4] PSEP 12, Sample reStructuredText PSEP Template, Goodger, Warsaw
+   (http://www.python.org/dev/peps/pep-0012)
+
+.. [5] The script referred to here is pep2pyramid.py, the successor to
+   pep2html.py, both of which live in the same directory in the Git
+   tree as the PSEPs themselves.  Try ``pep2html.py --help`` for
+   details.  The URL for viewing PSEPs on the web is
+   http://www.python.org/dev/peps/.
+
+.. _issue tracker:
+   http://bugs.openbossa.org/
+
+.. _Open Publication License: http://www.opencontent.org/openpub/
+
+.. _reStructuredText: http://docutils.sourceforge.net/rst.html
+
+.. _Docutils: http://docutils.sourceforge.net/
+
+
+Copyright
+=========
+
+This document has been placed in the public domain.
+
+
+..
+   Local Variables:
+   mode: indented-text
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70
+   coding: utf-8
+   End:
