@@ -6,28 +6,30 @@
 # the "cvs login" command to log into the Python CVS server as
 # anonymous.
 
-TMPDIR="$HOME/tmp"
+TMPDIR="/tmp"
 WORKDIR="peps-$$"
 
 TARGETDIR='/tmp/www.pyside.org/docs/pseps'
 
 GITROOT='gitorious.org:pyside/pseps.git'
-CVSROOT=':pserver:anonymous@cvs.python.sourceforge.net:/cvsroot/python'
-export CVSROOT
+#CVSROOT=':pserver:anonymous@cvs.python.sourceforge.net:/cvsroot/python'
+#export CVSROOT
 
 cd "$TMPDIR" || exit $?
 #cvs -Q checkout -d "$WORKDIR" python/nondist/peps || exit $?
 git clone --depth 1 $GITROOT "$WORKDIR"
 
 cd "$WORKDIR" || exit $?
-python ./pep2html.py -q || exit $?
+#python ./pep2html.py -q || exit $?
+make -s all || exit $?
 
 # This loop avoids modifying the files for an unchanged PEP.
 # The HTML file is treated a little strangely since it contains the
 # (pseudo-)random selection of the corner logo.
 
-for FILE in *.txt ; do
+for FILE in psep-*.txt ; do
     HTML="${FILE%txt}html"
+    AUX="${FILE%.txt}-*"
     if [ -e "$TARGETDIR/$FILE" ] ; then
         if cmp -s "$FILE" "$TARGETDIR/$FILE" ; then
             true
@@ -38,7 +40,17 @@ for FILE in *.txt ; do
     else
         cp "$HTML" "$TARGETDIR/" || exit $?
     fi
+    for N in $AUX; do
+        if [ -e "$N" ] ; then
+            echo in aux: $AUX
+            if cmp -s "$N" "$TARGETDIR/$N" ; then
+                true
+            else
+                cp "$N" "$TARGETDIR/" || exit $?
+            fi
+        fi
+    done
 done
 
 cd "$TMPDIR" || exit $?
-rm -r "$WORKDIR" || exit $?
+rm -rf "$WORKDIR" || exit $?
