@@ -31,9 +31,9 @@ class Headers(Transform):
 
     default_priority = 360
 
-    pep_url = 'pep-%04d'
-    pep_cvs_url = ('http://svn.python.org/view/*checkout*'
-                   '/peps/trunk/pep-%04d.txt')
+    pep_url = 'psep-%04d'
+    pep_cvs_url = ('http://qt.gitorious.org/pyside/pseps/blobs/master'
+                   '/psep-%04d.txt')
     rcs_keyword_substitutions = (
           (re.compile(r'\$' r'RCSfile: (.+),v \$$', re.IGNORECASE), r'\1'),
           (re.compile(r'\$[a-zA-Z]+: (.+) \$$'), r'\1'),)
@@ -49,7 +49,7 @@ class Headers(Transform):
                             'header; it is not a PEP.')
         pep = None
         for field in header:
-            if field[0].astext().lower() == 'pep': # should be the first field
+            if field[0].astext().lower() == 'psep': # should be the first field
                 value = field[1].astext()
                 try:
                     pep = int(value)
@@ -58,7 +58,7 @@ class Headers(Transform):
                     pep = value
                     cvs_url = None
                     msg = self.document.reporter.warning(
-                        '"PEP" header must contain an integer; "%s" is an '
+                        '"PSEP" header must contain an integer; "%s" is an '
                         'invalid value.' % pep, base_node=field)
                     msgid = self.document.set_id(msg)
                     prb = nodes.problematic(value, value or '(none)',
@@ -273,9 +273,7 @@ class PEPZeroSpecial(nodes.SparseNodeVisitor):
                     pass
 
 
-non_masked_addresses = ('peps@python.org',
-                        'python-list@python.org',
-                        'python-dev@python.org')
+non_masked_addresses = ('pyside@lists.openbossa.org',)
 
 def mask_email(ref, pepno=None):
     """
@@ -297,7 +295,7 @@ def mask_email(ref, pepno=None):
         if pepno is None:
             return replacement
         else:
-            ref['refuri'] += '?subject=PEP%%20%s' % pepno
+            ref['refuri'] += '?subject=PSEP%%20%s' % pepno
             ref[:] = [replacement]
             return ref
     else:

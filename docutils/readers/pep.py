@@ -16,7 +16,7 @@ from docutils.parsers import rst
 
 class Reader(standalone.Reader):
 
-    supported = ('pep',)
+    supported = ('psep',)
     """Contexts this reader supports."""
 
     settings_spec = (

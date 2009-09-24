@@ -109,32 +109,32 @@ def write_pep0(peps, output=sys.stdout):
     write_column_headers(output)
     meta, info, accepted, open_, finished, dead = sort_peps(peps)
     print>>output
-    print>>output, u" Meta-PEPs (PEPs about PEPs or Processes)"
+    print>>output, u" Meta-PSEPs (PSEPs about PSEPs or Processes)"
     print>>output
     for pep in meta:
         print>>output, unicode(pep)
     print>>output
-    print>>output, u" Other Informational PEPs"
+    print>>output, u" Other Informational PSEPs"
     print>>output
     for pep in info:
         print>>output, unicode(pep)
     print>>output
-    print>>output, u" Accepted PEPs (accepted; may not be implemented yet)"
+    print>>output, u" Accepted PSEPs (accepted; may not be implemented yet)"
     print>>output
     for pep in accepted:
         print>>output, unicode(pep)
     print>>output
-    print>>output, u" Open PEPs (under consideration)"
+    print>>output, u" Open PSEPs (under consideration)"
     print>>output
     for pep in open_:
         print>>output, unicode(pep)
     print>>output
-    print>>output, u" Finished PEPs (done, implemented in code repository)"
+    print>>output, u" Finished PSEPs (done, implemented in code repository)"
     print>>output
     for pep in finished:
         print>>output, unicode(pep)
     print>>output
-    print>>output, u" Deferred, Abandoned, Withdrawn, and Rejected PEPs"
+    print>>output, u" Deferred, Abandoned, Withdrawn, and Rejected PSEPs"
     print>>output
     for pep in dead:
         print>>output, unicode(pep)
@@ -154,7 +154,7 @@ def write_pep0(peps, output=sys.stdout):
     print>>output, u"Key"
     print>>output
     for type_ in PEP.type_values:
-        print>>output, u"    %s - %s PEP" % (type_[0], type_)
+        print>>output, u"    %s - %s PSEP" % (type_[0], type_)
     print>>output
     for status in PEP.status_values:
         print>>output, u"    %s - %s proposal" % (status[0], status)

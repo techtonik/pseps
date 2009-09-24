@@ -1,5 +1,6 @@
 PSEP: 1
 Title: PSEP Purpose and Guidelines
+Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas
 Status: Draft
@@ -62,7 +63,7 @@ PSEP Work Flow
 
 The PSEP editors assign PSEP numbers and change their status.  The
 current PSEP editor is Matti Airas.  Please send
-all PSEP-related email to <pyside@pyside.org> (no cross-posting please).
+all PSEP-related email to <pyside@lists.openbossa.org> (no cross-posting please).
 Also see `PSEP Editor Responsibilities & Workflow`_ below.
 
 The PSEP process begins with a new idea for PySide.  It is highly
@@ -77,12 +78,12 @@ style and format described below, shepherds the discussions in the
 appropriate forums, and attempts to build community consensus around the
 idea.  The PSEP champion (a.k.a. Author) should first attempt to
 ascertain whether the idea is PSEP-able.  Posting to the
-pyside@pyside.org mailing list is recommended.  Enhancements not
+pyside@lists.openbossa.org mailing list is recommended.  Enhancements not
 resulting in API changes usually don't need a PSEP and can be injected
 into the PySide development work flow with a patch submission to the
 PySide `issue tracker`_.
 
-The PSEP champion then emails the PSEP editor <pyside@pyside.org> with a
+The PSEP champion then emails the PSEP editor <pyside@lists.openbossa.org> with a
 proposed title and a rough, but fleshed out, draft of the PSEP.  This
 draft must be written in PSEP style as described below.
 
@@ -98,7 +99,7 @@ during the approval phase, and is the final arbiter of the draft's
 PSEP-ability.
 
 If a pre-PSEP is rejected, the author may elect to take the pre-PSEP to
-the pyside@pyside.org mailing list to help flesh it out, gain feedback
+the pyside@lists.openbossa.org mailing list to help flesh it out, gain feedback
 and consensus from the community at large, and improve the PSEP for
 re-submission.
 
@@ -284,7 +285,7 @@ While a PSEP is in private discussions (usually during the initial
 Draft phase), a Discussions-To header will indicate the mailing list
 or URL where the PSEP is being discussed.  No Discussions-To header is
 necessary if the PSEP is being discussed privately with the author, or
-on the pyside@pyside.org mailing list.  Note that email
+on the pyside@lists.openbossa.org mailing list.  Note that email
 addresses in the Discussions-To header will not be obscured.
 
 The Type header specifies the type of PSEP: Standards Track,
@@ -358,7 +359,7 @@ that's not possible, you can always submit a competing PSEP.
 
 If you are interested in assuming ownership of a PSEP, send a message
 asking to take over, addressed to both the original author and the PSEP
-editor <pyside@pyside.org>.  If the original author doesn't respond to
+editor <pyside@lists.openbossa.org>.  If the original author doesn't respond to
 email in a timely manner, the PSEP editor will make a unilateral
 decision (it's not like such decisions can't be reversed :).
 
@@ -366,9 +367,9 @@ decision (it's not like such decisions can't be reversed :).
 PSEP Editor Responsibilities & Workflow
 =======================================
 
-A PSEP editor must subscribe to the <pyside@pyside.org> list.  All
+A PSEP editor must subscribe to the <pyside@lists.openbossa.org> list.  All
 PSEP-related correspondence should be sent (or CC'd) to
-<pyside@pyside.org> (but please do not cross-post!).
+<pyside@lists.openbossa.org> (but please do not cross-post!).
 
 For each new PSEP that comes in an editor does the following:
 
@@ -401,9 +402,9 @@ Once the PSEP is ready for the repository, the PSEP editor will:
   properly.
 
 * Send email back to the PSEP author with next steps (post to
-  pyside@pyside.org).
+  pyside@lists.openbossa.org).
 
-Updates to existing PSEPs also come in to pyside@pyside.org.
+Updates to existing PSEPs also come in to pyside@lists.openbossa.org.
 Alternatively, Gitorious merge requests may be made directly.
 
 Many PSEPs are written and maintained by developers with write access to

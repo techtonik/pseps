@@ -14,14 +14,14 @@ to templates.  DO NOT USE THIS HTML FILE AS YOUR TEMPLATE!
 <body bgcolor="white">
 <table class="navigation" cellpadding="0" cellspacing="0"
        width="100%%" border="0">
-<tr><td class="navicon" width="150" height="35">
+<tr><td class="navicon" width="199" height="102">
 <a href="%(pyhome)s/" title="Python Home Page">
-<img src="%(pyhome)s/pics/PyBanner%(banner)03d.gif" alt="[Python]"
- border="0" width="150" height="35" /></a></td>
+<img src="%(pyhome)s/wp-content/themes/openbossa/images/logo.png" alt="[PySide]"
+ border="0" width="199" height="102" /></a></td>
 <td class="textlinks" align="left">
-[<b><a href="%(pyhome)s/">Python Home</a></b>]
-[<b><a href="%(pepindex)s">PEP Index</a></b>]
-[<b><a href="%(pephome)s/pep-%(pepnum)s.txt">PEP Source</a></b>]
+[<b><a href="%(pyhome)s/">PySide Home</a></b>]
+[<b><a href="%(pepindex)s">PSEP Index</a></b>]
+[<b><a href="%(pephome)s/psep-%(pepnum)s.txt">PSEP Source</a></b>]
 </td></tr></table>
 %(body)s
 %(body_suffix)s

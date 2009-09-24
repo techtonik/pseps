@@ -9,13 +9,15 @@
 TMPDIR="$HOME/tmp"
 WORKDIR="peps-$$"
 
-TARGETDIR='/ftp/ftp.python.org/pub/www.python.org/peps'
+TARGETDIR='/tmp/www.pyside.org/docs/pseps'
 
+GITROOT='gitorious.org:pyside/pseps.git'
 CVSROOT=':pserver:anonymous@cvs.python.sourceforge.net:/cvsroot/python'
 export CVSROOT
 
 cd "$TMPDIR" || exit $?
-cvs -Q checkout -d "$WORKDIR" python/nondist/peps || exit $?
+#cvs -Q checkout -d "$WORKDIR" python/nondist/peps || exit $?
+git clone --depth 1 $GITROOT "$WORKDIR"
 
 cd "$WORKDIR" || exit $?
 python ./pep2html.py -q || exit $?

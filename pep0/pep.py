@@ -148,7 +148,7 @@ class PEP(object):
     # The various RFC 822 headers that are supported.
     # The second item in the nested tuples represents if the header is
     # required or not.
-    headers = (('PEP', True), ('Title', True), ('Version', True),
+    headers = (('PSEP', True), ('Title', True), ('Version', True),
                 ('Last-Modified', True), ('Author', True),
                 ('Discussions-To', False), ('Status', True), ('Type', True),
                 ('Content-Type', False), ('Requires', False),
@@ -193,7 +193,7 @@ class PEP(object):
             pass
         # 'PEP'.
         try:
-            self.number = int(metadata['PEP'])
+            self.number = int(metadata['PSEP'])
         except ValueError:
             raise PEPParseError("PEP number isn't an integer", pep_file.name)
         # 'Title'.
