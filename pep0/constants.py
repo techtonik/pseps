@@ -5,6 +5,7 @@ column_format = (u' %(type)1s%(status)1s %(number)4s  %(title)-' +
 
 header = u"""PSEP: 0
 Title: Index of PySide Enhancement Proposals (PSEPs)
+Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas <matti.p.airas@nokia.com>,
 Status: Active
