@@ -182,12 +182,13 @@ def fixfile(inpath, input_lines, outfile):
         '<body bgcolor="white">\n'
         '<table class="navigation" cellpadding="0" cellspacing="0"\n'
         '       width="100%%" border="0">\n'
-        '<tr><td class="navicon" width="150" height="35">\n'
-        '<a href="../" title="Python Home Page">\n'
-        '<img src="../pics/PyBanner%03d.gif" alt="[Python]"\n'
-        ' border="0" width="150" height="35" /></a></td>\n'
+        '<tr><td class="navicon" width="199" height="102">\n'
+        '<a href="http://www.pyside.org/" title="PySide Home Page">\n'
+        '<img src="http://www.pyside.org/wp-content/themes/'
+        'openbossa/images/logo.png" alt="[PySide]"\n'
+        ' border="0" width="199" height="102" /></a></td>\n'
         '<td class="textlinks" align="left">\n'
-        '[<b><a href="../">Python Home</a></b>]' % r)
+        '[<b><a href="http://www.pyside.org">PySide Home</a></b>]')
     if basename <> 'psep-0000.txt':
         print >> outfile, '[<b><a href=".">PSEP Index</a></b>]'
     if pep:

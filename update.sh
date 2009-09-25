@@ -9,6 +9,8 @@
 TMPDIR="/tmp"
 WORKDIR="peps-$$"
 
+AUXFILES="pep.css style.css index.html"
+
 TARGETDIR='/tmp/www.pyside.org/docs/pseps'
 
 GITROOT='gitorious.org:pyside/pseps.git'
@@ -29,7 +31,7 @@ make -s all || exit $?
 
 for FILE in psep-*.txt ; do
     HTML="${FILE%txt}html"
-    AUX="${FILE%.txt}-*"
+    ATT="${FILE%.txt}-*"
     if [ -e "$TARGETDIR/$FILE" ] ; then
         if cmp -s "$FILE" "$TARGETDIR/$FILE" ; then
             true
@@ -40,9 +42,8 @@ for FILE in psep-*.txt ; do
     else
         cp "$HTML" "$TARGETDIR/" || exit $?
     fi
-    for N in $AUX; do
+    for N in "$ATT"; do
         if [ -e "$N" ] ; then
-            echo in aux: $AUX
             if cmp -s "$N" "$TARGETDIR/$N" ; then
                 true
             else
@@ -50,6 +51,20 @@ for FILE in psep-*.txt ; do
             fi
         fi
     done
+done
+
+for FILE in "$AUXFILES" ; do
+    if [ -e "$FILE" ] ; then
+        if [ -e "$TARGETDIR/$FILE" ] ; then
+            if cmp -s "$FILE" "$TARGETDIR/$FILE" ; then
+                true
+            else
+                cp -d "$FILE" "$TARGETDIR/" || exit $?
+            fi
+        else
+            cp -d "$FILE" "$TARGETDIR/" || exit $?
+        fi
+    fi
 done
 
 cd "$TMPDIR" || exit $?

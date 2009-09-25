@@ -26,7 +26,7 @@ install:
 
 clean:
 	-rm psep-0000.txt
-	-rm *.html
+	-rm psep-*.html
 
 update:
 	git pull
