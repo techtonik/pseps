@@ -28,8 +28,10 @@ Because the PSEPs are maintained as text files in a versioned
 repository, their revision history is the historical record of the
 feature proposal [1]_.
 
-The whole PSEP process has been copied verbatim from Python's PEP (Python
-Enhancement Proposal) process.
+The whole PSEP process has been copied verbatim from Python's PEP
+(Python Enhancement Proposal) process, and this document has been
+adapted to PSEP by Matti Airas from PEP 1 by Barry Warsaw, Jeremy
+Hylton, and David Goodger.
 
 PSEP Types
 ==========

@@ -1,46 +1,43 @@
-PEP: 12
-Title: Sample reStructuredText PEP Template
-Version: $Revision: 65628 $
-Last-Modified: $Date: 2008-08-10 16:59:20 +0300 (Sun, 10 Aug 2008) $
-Author: David Goodger <goodger@python.org>,
-        Barry Warsaw <barry@python.org>
-Status: Active
+PSEP: 12
+Title: Sample reStructuredText PSEP Template
+Version: $Revision$
+Last-Modified: $Date$
+Author: Matti Airas <matti.p.airas@nokia.com>
+Status: Draft
 Type: Process
 Content-Type: text/x-rst
-Created: 05-Aug-2002
-Post-History: 30-Aug-2002
+Created: 25-Sep-2009
 
 
 Abstract
 ========
 
-This PEP provides a boilerplate or sample template for creating your
-own reStructuredText PEPs.  In conjunction with the content guidelines
-in PEP 1 [1]_, this should make it easy for you to conform your own
-PEPs to the format outlined below.
+This PSEP provides a boilerplate or sample template for creating your
+own reStructuredText PSEPs.  In conjunction with the content guidelines
+in PSEP 1 [1]_, this should make it easy for you to conform your own
+PSEPs to the format outlined below.
 
-Note: if you are reading this PEP via the web, you should first grab
-the text (reStructuredText) source of this PEP in order to complete
+Note: if you are reading this PSEP via the web, you should first grab
+the text (reStructuredText) source of this PSEP in order to complete
 the steps below.  **DO NOT USE THE HTML FILE AS YOUR TEMPLATE!**
 
-To get the source this (or any) PEP, look at the top of the HTML page
+To get the source this (or any) PSEP, look at the top of the HTML page
 and click on the date & time on the "Last-Modified" line.  It is a
-link to the source text in the Python repository.
+link to the source text in the PySide repository.
 
-If you would prefer not to use markup in your PEP, please see PEP 9,
-"Sample Plaintext PEP Template" [2]_.
+This PSEP has been adapted (mostly copied verbatim) from PEP 12.
 
 
 Rationale
 =========
 
-PEP submissions come in a wide variety of forms, not all adhering
+PSEP submissions come in a wide variety of forms, not all adhering
 to the format guidelines set forth below.  Use this template, in
 conjunction with the format guidelines below, to ensure that your
-PEP submission won't get automatically rejected because of form.
+PSEP submission won't get automatically rejected because of form.
 
-ReStructuredText is offered as an alternative to plaintext PEPs, to
-allow PEP authors more functionality and expressivity, while
+ReStructuredText is offered as an alternative to plaintext PSEPs, to
+allow PSEP authors more functionality and expressivity, while
 maintaining easy readability in the source text.  The processed HTML
 form makes the functionality accessible to readers: live hyperlinks,
 styled text, tables, images, and automatic tables of contents, among
@@ -51,25 +48,25 @@ reStructuredText, see PEP 287.
 How to Use This Template
 ========================
 
-To use this template you must first decide whether your PEP is going
-to be an Informational or Standards Track PEP.  Most PEPs are
-Standards Track because they propose a new feature for the Python
-language or standard library.  When in doubt, read PEP 1 for details
-or contact the PEP editors <peps@python.org>.
+To use this template you must first decide whether your PSEP is going
+to be an Informational or Standards Track PSEP.  Most PSEPs are
+Standards Track because they propose a new feature for the PySide
+language or standard library.  When in doubt, read PSEP 1 for details
+or contact the PSEP editors <pyside@lists.openbossa.org>.
 
-Once you've decided which type of PEP yours is going to be, follow the
+Once you've decided which type of PSEP yours is going to be, follow the
 directions below.
 
 - Make a copy of this file (``.txt`` file, **not** HTML!) and perform
   the following edits.
 
-- Replace the "PEP: 9" header with "PEP: XXX" since you don't yet have
-  a PEP number assignment.
+- Replace the "PSEP: 12" header with "PSEP: XXX" since you don't yet have
+  a PSEP number assignment.
 
-- Change the Title header to the title of your PEP.
+- Change the Title header to the title of your PSEP.
 
 - Leave the Version and Last-Modified headers alone; we'll take care
-  of those when we check your PEP into Python's Subversion repository.
+  of those when we check your PSEP into PySide's Git repository.
   These headers consist of keywords ("Revision" and "Date" enclosed in
   "$"-signs) which are automatically expanded by the repository.
   Please do not edit the expanded date or revision text.
@@ -82,31 +79,30 @@ directions below.
   obfuscate your email address.
 
 - If there is a mailing list for discussion of your new feature, add a
-  Discussions-To header right after the Author header.  You should not
-  add a Discussions-To header if the mailing list to be used is either
-  python-list@python.org or python-dev@python.org, or if discussions
-  should be sent to you directly.  Most Informational PEPs don't have
-  a Discussions-To header.
+  Discussions-To header right after the Author header.  You should not add a
+  Discussions-To header if the mailing list to be used is
+  pyside@lists.openbossa.org, or if discussions should be sent to you directly.
+  Most Informational PSEPs don't have a Discussions-To header.
 
 - Change the Status header to "Draft".
 
-- For Standards Track PEPs, change the Type header to "Standards
+- For Standards Track PSEPs, change the Type header to "Standards
   Track".
 
-- For Informational PEPs, change the Type header to "Informational".
+- For Informational PSEPs, change the Type header to "Informational".
 
-- For Standards Track PEPs, if your feature depends on the acceptance
-  of some other currently in-development PEP, add a Requires header
-  right after the Type header.  The value should be the PEP number of
-  the PEP yours depends on.  Don't add this header if your dependent
-  feature is described in a Final PEP.
+- For Standards Track PSEPs, if your feature depends on the acceptance
+  of some other currently in-development PSEP, add a Requires header
+  right after the Type header.  The value should be the PSEP number of
+  the PSEP yours depends on.  Don't add this header if your dependent
+  feature is described in a Final PSEP.
 
 - Change the Created header to today's date.  Be sure to follow the
   format carefully: it must be in ``dd-mmm-yyyy`` format, where the
   ``mmm`` is the 3 English letter month abbreviation, i.e. one of Jan,
   Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec.
 
-- For Standards Track PEPs, after the Created header, add a
+- For Standards Track PSEPs, after the Created header, add a
   Python-Version header and set the value to the next planned version
   of Python, i.e. the one your new feature will hopefully make its
   first appearance in.  Do not use an alpha or beta release
@@ -116,30 +112,31 @@ directions below.
 
       Python-Version: 2.2
 
-- Leave Post-History alone for now; you'll add dates to this header
-  each time you post your PEP to python-list@python.org or
-  python-dev@python.org.  If you posted your PEP to the lists on
-  August 14, 2001 and September 3, 2001, the Post-History header would
-  look like::
+  TODO: How to deal with different PySide/Qt/Python versions?
+
+- Leave Post-History alone for now; you'll add dates to this header each time
+  you post your PSEP to pyside@lists.openbossa.org.  If you posted your PSEP to
+  the lists on August 14, 2001 and September 3, 2001, the Post-History header
+  would look like::
 
       Post-History: 14-Aug-2001, 03-Sept-2001
 
   You must manually add new dates and check them in.  If you don't
-  have check-in privileges, send your changes to the PEP editors.
+  have check-in privileges, send your changes to the PSEP editors.
 
-- Add a Replaces header if your PEP obsoletes an earlier PEP.  The
-  value of this header is the number of the PEP that your new PEP is
-  replacing.  Only add this header if the older PEP is in "final"
+- Add a Replaces header if your PSEP obsoletes an earlier PSEP.  The
+  value of this header is the number of the PSEP that your new PSEP is
+  replacing.  Only add this header if the older PSEP is in "final"
   form, i.e. is either Accepted, Final, or Rejected.  You aren't
-  replacing an older open PEP if you're submitting a competing idea.
+  replacing an older open PSEP if you're submitting a competing idea.
 
-- Now write your Abstract, Rationale, and other content for your PEP,
+- Now write your Abstract, Rationale, and other content for your PSEP,
   replacing all this gobbledygook with your own text. Be sure to
   adhere to the format guidelines below, specifically on the
   prohibition of tab characters and the indentation requirements.
 
 - Update your References and Copyright section.  Usually you'll place
-  your PEP into the public domain, in which case just leave the
+  your PSEP into the public domain, in which case just leave the
   Copyright section alone.  Alternatively, you can use the `Open
   Publication License`__, but public domain is still strongly
   preferred.
@@ -149,13 +146,13 @@ directions below.
 - Leave the Emacs stanza at the end of this file alone, including the
   formfeed character ("^L", or ``\f``).
 
-- Send your PEP submission to the PEP editors at peps@python.org.
+- Send your PSEP submission to the PSEP editors at pyside@lists.openbossa.org.
 
 
-ReStructuredText PEP Formatting Requirements
-============================================
+ReStructuredText PSEP Formatting Requirements
+=============================================
 
-The following is a PEP-specific summary of reStructuredText syntax.
+The following is a PSEP-specific summary of reStructuredText syntax.
 For the sake of simplicity and brevity, much detail is omitted.  For
 more detail, see `Resources`_ below.  `Literal blocks`_ (in which no
 markup processing is done) are used for examples throughout, to
@@ -170,15 +167,15 @@ end of every sentence.  You should fill your paragraphs to column 70,
 but under no circumstances should your lines extend past column 79.
 If your code samples spill over column 79, you should rewrite them.
 
-Tab characters must never appear in the document at all.  A PEP should
+Tab characters must never appear in the document at all.  A PSEP should
 include the standard Emacs stanza included by example at the bottom of
-this PEP.
+this PSEP.
 
 
 Section Headings
 ----------------
 
-PEP headings must begin in column zero and the initial letter of each
+PSEP headings must begin in column zero and the initial letter of each
 word must be capitalized as in book titles.  Acronyms should be in all
 capitals.  Section titles must be adorned with an underline, a single
 repeated punctuation character, which begins in column zero and must
@@ -197,7 +194,7 @@ apostrophes).  For example::
     Third-Level Title
     '''''''''''''''''
 
-If there are more than three levels of sections in your PEP, you may
+If there are more than three levels of sections in your PSEP, you may
 insert overline/underline-adorned titles for the first and second
 levels as follows::
 
@@ -218,7 +215,7 @@ levels as follows::
     Fifth-Level Title
     '''''''''''''''''
 
-You shouldn't have more than five levels of sections in your PEP.  If
+You shouldn't have more than five levels of sections in your PSEP.  If
 you do, you should consider rewriting it.
 
 You must use two blank lines between the last line of a section's body
@@ -415,11 +412,11 @@ consist of multiple lines.  For example::
 Hyperlinks
 ----------
 
-When referencing an external web page in the body of a PEP, you should
+When referencing an external web page in the body of a PSEP, you should
 include the title of the page in the text, with either an inline
 hyperlink reference to the URL or a footnote reference (see
 `Footnotes`_ below).  Do not include the URL in the body text of the
-PEP.
+PSEP.
 
 Hyperlink references use backquotes and a trailing underscore to mark
 up the reference text; backquotes are optional if the reference text
@@ -428,7 +425,7 @@ is a single word.  For example::
     In this paragraph, we refer to the `Python web site`_.
 
 An explicit target provides the URL.  Put targets in a References
-section at the end of the PEP, or immediately after the reference.
+section at the end of the PSEP, or immediately after the reference.
 Hyperlink targets begin with two periods and a space (the "explicit
 markup start"), followed by a leading underscore, the reference text,
 a colon, and the URL (absolute or relative)::
@@ -450,10 +447,10 @@ make a link to the Abstract section like this::
     we can also just write: Abstract_.
 
 Footnotes containing the URLs from external targets will be generated
-automatically at the end of the References section of the PEP, along
+automatically at the end of the References section of the PSEP, along
 with footnote references linking the reference text to the footnotes.
 
-Text of the form "PEP x" or "RFC x" (where "x" is a number) will be
+Text of the form "PSEP x" or "RFC x" (where "x" is a number) will be
 linked automatically to the appropriate URLs.
 
 
@@ -468,13 +465,13 @@ right square bracket, and a trailing underscore::
 Whitespace must precede the footnote reference.  Leave a space between
 the footnote reference and the preceding word.
 
-When referring to another PEP, include the PEP number in the body
-text, such as "PEP 1".  The title may optionally appear.  Add a
+When referring to another PSEP, include the PSEP number in the body
+text, such as "PSEP 1".  The title may optionally appear.  Add a
 footnote reference following the title.  For example::
 
-    Refer to PEP 1 [2]_ for more information.
+    Refer to PSEP 1 [2]_ for more information.
 
-Add a footnote that includes the PEP's title and author.  It may
+Add a footnote that includes the PSEP's title and author.  It may
 optionally include the explicit URL on a separate line, but only in
 the References section.  Footnotes begin with ".. " (the explicit
 markup start), followed by the footnote marker (no underscores),
@@ -483,19 +480,19 @@ followed by the footnote body.  For example::
     References
     ==========
 
-    .. [2] PEP 1, "PEP Purpose and Guidelines", Warsaw, Hylton
+    .. [2] PSEP 1, "PEP Purpose and Guidelines", Warsaw, Hylton
        (http://www.python.org/dev/peps/pep-0001)
 
-If you decide to provide an explicit URL for a PEP, please use this as
+If you decide to provide an explicit URL for a PSEP, please use this as
 the URL template::
 
-    http://www.python.org/dev/peps/pep-xxxx
+    http://www.pyside.org/docs/pseps/psep-xxxx
 
-PEP numbers in URLs must be padded with zeros from the left, so as to
-be exactly 4 characters wide, however PEP numbers in the text are
+PSEP numbers in URLs must be padded with zeros from the left, so as to
+be exactly 4 characters wide, however PSEP numbers in the text are
 never padded.
 
-During the course of developing your PEP, you may have to add, remove,
+During the course of developing your PSEP, you may have to add, remove,
 and rearrange footnote references, possibly resulting in mismatched
 references, obsolete footnotes, and confusion.  Auto-numbered
 footnotes allow more freedom.  Instead of a number, use a label of the
@@ -513,14 +510,14 @@ other characters are allowed).  For example::
        http://www.python.org/dev/peps/pep-0001
 
 Footnotes and footnote references will be numbered automatically, and
-the numbers will always match.  Once a PEP is finalized, auto-numbered
+the numbers will always match.  Once a PSEP is finalized, auto-numbered
 labels should be replaced by numbers for simplicity.
 
 
 Images
 ------
 
-If your PEP contains a diagram, you may include it in the processed
+If your PSEP contains a diagram, you may include it in the processed
 output using the "image" directive::
 
     .. image:: diagram.png
@@ -528,7 +525,7 @@ output using the "image" directive::
 Any browser-friendly graphics format is possible: .png, .jpeg, .gif,
 .tiff, etc.
 
-Since this image will not be visible to readers of the PEP in source
+Since this image will not be visible to readers of the PSEP in source
 text form, you should consider including a description or ASCII art
 alternative, using a comment (below).
 
@@ -541,7 +538,7 @@ following an explicit markup start: two periods and whitespace.  Leave
 the ".." on a line by itself to ensure that the comment is not
 misinterpreted as another explicit markup construct.  Comments are not
 visible in the processed document.  For the benefit of those reading
-your PEP in source form, please consider including a descriptions of
+your PSEP in source form, please consider including a descriptions of
 or ASCII art alternatives to any images you include.  For example::
 
      .. image:: dataflow.png
@@ -604,7 +601,7 @@ thoroughness, please see:
 
   __ http://docutils.sourceforge.net/spec/rst/reStructuredText.html
 
-The processing of reStructuredText PEPs is done using Docutils_.  If
+The processing of reStructuredText PSEPs is done using Docutils_.  If
 you have a question or require assistance with reStructuredText or
 Docutils, please `post a message`_ to the `Docutils-users mailing
 list`_.  The `Docutils project web site`_ has more information.
@@ -620,11 +617,8 @@ list`_.  The `Docutils project web site`_ has more information.
 References
 ==========
 
-.. [1] PEP 1, PEP Purpose and Guidelines, Warsaw, Hylton
-   (http://www.python.org/dev/peps/pep-0001)
-
-.. [2] PEP 9, Sample Plaintext PEP Template, Warsaw
-   (http://www.python.org/dev/peps/pep-0009)
+.. [1] PSEP 1, PSEP Purpose and Guidelines, Airas
+   (http://www.pyside.org/docs/pseps/psep-0001)
 
 
 Copyright
