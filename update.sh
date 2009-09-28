@@ -11,9 +11,9 @@ WORKDIR="pseps-$$"
 
 AUXFILES="psep.css style.css index.html"
 
-TARGETDIR='/tmp/www.pyside.org/docs/pseps/luck'
+TARGETDIR='/tmp/www.pyside.org/docs/pseps'
 
-GITROOT='git://gitorious.org/pyside/pseps.git'
+GITROOT='git://gitorious.org/~lucianowolf/pyside/luck-pseps-clone.git'
 #CVSROOT=':pserver:anonymous@cvs.python.sourceforge.net:/cvsroot/python'
 #export CVSROOT
 
