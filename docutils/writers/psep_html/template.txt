@@ -22,7 +22,6 @@ to templates.  DO NOT USE THIS HTML FILE AS YOUR TEMPLATE!
 <td class="textlinks" align="left">
 [<b><a href="%(pyhome)s/">Python Home</a></b>]
 [<b><a href="%(psepindex)s/">PSEP Index</a></b>]
-[<b><a href="%(psephome)s/psep-%(psepnum)s.txt">PSEP Source</a></b>]
 </td></tr></table>
 <div class="document">
 %(body)s
