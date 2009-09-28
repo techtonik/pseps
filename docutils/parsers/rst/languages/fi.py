@@ -76,7 +76,7 @@ roles = {
     u'yl\u00e4indeksi': u'superscript',
     u'title-reference (translation required)': u'title-reference',
     u'title (translation required)': u'title-reference',
-    u'pep-reference (translation required)': u'pep-reference',
+    u'psep-reference (translation required)': u'psep-reference',
     u'rfc-reference (translation required)': u'rfc-reference',
     u'korostus': u'emphasis',
     u'vahvistus': u'strong',

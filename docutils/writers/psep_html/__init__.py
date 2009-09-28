@@ -3,7 +3,7 @@
 # Copyright: This module has been placed in the public domain.
 
 """
-PEP HTML Writer.
+PSEP HTML Writer.
 """
 
 __docformat__ = 'reStructuredText'
@@ -20,7 +20,7 @@ from docutils.writers import html4css1
 
 class Writer(html4css1.Writer):
 
-    default_stylesheet = 'pep.css'
+    default_stylesheet = 'psep.css'
 
     default_stylesheet_path = utils.relative_path(
         os.path.join(os.getcwd(), 'dummy'),
@@ -33,16 +33,16 @@ class Writer(html4css1.Writer):
         os.path.join(os.path.dirname(__file__), default_template))
 
     settings_spec = html4css1.Writer.settings_spec + (
-        'PEP/HTML-Specific Options',
-        'For the PEP/HTML writer, the default value for the --stylesheet-path '
+        'PSEP/HTML-Specific Options',
+        'For the PSEP/HTML writer, the default value for the --stylesheet-path '
         'option is "%s", and the default value for --template is "%s". '
         'See HTML-Specific Options above.'
         % (default_stylesheet_path, default_template_path),
         (('Python\'s home URL.  Default is "http://www.python.org".',
           ['--python-home'],
           {'default': 'http://www.pyside.org', 'metavar': '<URL>'}),
-         ('Home URL prefix for PEPs.  Default is "." (current directory).',
-          ['--pep-home'],
+         ('Home URL prefix for PSEPs.  Default is "." (current directory).',
+          ['--psep-home'],
           {'default': '.', 'metavar': '<URL>'}),
          # For testing.
          (frontend.SUPPRESS_HELP,
@@ -55,7 +55,7 @@ class Writer(html4css1.Writer):
     relative_path_settings = (html4css1.Writer.relative_path_settings
                               + ('template',))
 
-    config_section = 'pep_html writer'
+    config_section = 'psep_html writer'
     config_section_dependencies = ('writers', 'html4css1 writer')
 
     def __init__(self):
@@ -67,24 +67,24 @@ class Writer(html4css1.Writer):
         settings = self.document.settings
         pyhome = settings.python_home
         subs['pyhome'] = pyhome
-        subs['pephome'] = settings.pep_home
+        subs['psephome'] = settings.psep_home
         if pyhome == '..':
-            subs['pepindex'] = '.'
+            subs['psepindex'] = '.'
         else:
-            subs['pepindex'] = pyhome + '/docs/peps'
+            subs['psepindex'] = pyhome + '/docs/pseps'
         index = self.document.first_child_matching_class(nodes.field_list)
         header = self.document[index]
-        self.pepnum = header[0][1].astext()
-        subs['pep'] = self.pepnum
+        self.psepnum = header[0][1].astext()
+        subs['psep'] = self.psepnum
         if settings.no_random:
             subs['banner'] = 0
         else:
             import random
             subs['banner'] = random.randrange(64)
         try:
-            subs['pepnum'] = '%04i' % int(self.pepnum)
+            subs['psepnum'] = '%04i' % int(self.psepnum)
         except ValueError:
-            subs['pepnum'] = pepnum
+            subs['psepnum'] = psepnum
         self.title = header[1][1].astext()
         subs['title'] = self.title
         subs['body'] = ''.join(
@@ -94,7 +94,7 @@ class Writer(html4css1.Writer):
     def assemble_parts(self):
         html4css1.Writer.assemble_parts(self)
         self.parts['title'] = [self.title]
-        self.parts['pepnum'] = self.pepnum
+        self.parts['psepnum'] = self.psepnum
 
 
 class HTMLTranslator(html4css1.HTMLTranslator):

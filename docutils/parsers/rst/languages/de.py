@@ -78,7 +78,7 @@ roles = {
       'tiefgestellt': 'subscript',
       'hochgestellt': 'superscript',
       'titel-referenz': 'title-reference',
-      'pep-referenz': 'pep-reference',
+      'psep-referenz': 'psep-reference',
       'rfc-referenz': 'rfc-reference',
       'betonung': 'emphasis',
       'fett': 'strong',

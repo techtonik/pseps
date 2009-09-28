@@ -644,9 +644,9 @@ class OptionParser(optparse.OptionParser, docutils.SettingsSpec):
 class ConfigParser(CP.ConfigParser):
 
     old_settings = {
-        'pep_stylesheet': ('pep_html writer', 'stylesheet'),
-        'pep_stylesheet_path': ('pep_html writer', 'stylesheet_path'),
-        'pep_template': ('pep_html writer', 'template')}
+        'psep_stylesheet': ('psep_html writer', 'stylesheet'),
+        'psep_stylesheet_path': ('psep_html writer', 'stylesheet_path'),
+        'psep_template': ('psep_html writer', 'template')}
     """{old setting: (new section, new setting)} mapping, used by
     `handle_old_config`, to convert settings from the old [options] section."""
 

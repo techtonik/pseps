@@ -251,26 +251,26 @@ register_generic_role('subscript', nodes.subscript)
 register_generic_role('superscript', nodes.superscript)
 register_generic_role('title-reference', nodes.title_reference)
 
-def pep_reference_role(role, rawtext, text, lineno, inliner,
+def psep_reference_role(role, rawtext, text, lineno, inliner,
                        options={}, content=[]):
     try:
-        pepnum = int(text)
-        if pepnum < 0 or pepnum > 9999:
+        psepnum = int(text)
+        if psepnum < 0 or psepnum > 9999:
             raise ValueError
     except ValueError:
         msg = inliner.reporter.error(
-            'PEP number must be a number from 0 to 9999; "%s" is invalid.'
+            'PSEP number must be a number from 0 to 9999; "%s" is invalid.'
             % text, line=lineno)
         prb = inliner.problematic(rawtext, rawtext, msg)
         return [prb], [msg]
-    # Base URL mainly used by inliner.pep_reference; so this is correct:
-    ref = (inliner.document.settings.pep_base_url
-           + inliner.document.settings.pep_file_url_template % pepnum)
+    # Base URL mainly used by inliner.psep_reference; so this is correct:
+    ref = (inliner.document.settings.psep_base_url
+           + inliner.document.settings.psep_file_url_template % psepnum)
     set_classes(options)
-    return [nodes.reference(rawtext, 'PEP ' + utils.unescape(text), refuri=ref,
+    return [nodes.reference(rawtext, 'PSEP ' + utils.unescape(text), refuri=ref,
                             **options)], []
 
-register_canonical_role('pep-reference', pep_reference_role)
+register_canonical_role('psep-reference', psep_reference_role)
 
 def rfc_reference_role(role, rawtext, text, lineno, inliner,
                        options={}, content=[]):

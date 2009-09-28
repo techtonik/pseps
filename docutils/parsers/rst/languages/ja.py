@@ -95,7 +95,7 @@ roles = {
     u'上付': 'superscript',
     u'上': 'superscript',
     u'題参照': 'title-reference',
-    u'pep参照': 'pep-reference',
+    u'psep参照': 'psep-reference',
     u'rfc参照': 'rfc-reference',
     u'強調': 'emphasis',
     u'強い': 'strong',

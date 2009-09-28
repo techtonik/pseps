@@ -74,7 +74,7 @@ roles = {
       u'subscript (translation required)': 'subscript',
       u'superscript (translation required)': 'superscript',
       u'title-reference (translation required)': 'title-reference',
-      u'pep-reference (translation required)': 'pep-reference',
+      u'psep-reference (translation required)': 'psep-reference',
       u'rfc-reference (translation required)': 'rfc-reference',
       u'emphasis (translation required)': 'emphasis',
       u'strong (translation required)': 'strong',

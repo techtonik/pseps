@@ -449,9 +449,9 @@ class Inliner:
 
     def init_customizations(self, settings):
         """Setting-based customizations; run when parsing begins."""
-        if settings.pep_references:
-            self.implicit_dispatch.append((self.patterns.pep,
-                                           self.pep_reference))
+        if settings.psep_references:
+            self.implicit_dispatch.append((self.patterns.psep,
+                                           self.psep_reference))
         if settings.rfc_references:
             self.implicit_dispatch.append((self.patterns.rfc,
                                            self.rfc_reference))
@@ -627,13 +627,13 @@ class Inliner:
                 )
                 %(end_string_suffix)s
                 """) % locals(), re.VERBOSE),
-          pep=re.compile(
+          psep=re.compile(
                 r"""
                 %(start_string_prefix)s
                 (
-                  (pep-(?P<pepnum1>\d+)(.txt)?) # reference to source file
+                  (psep-(?P<psepnum1>\d+)(.txt)?) # reference to source file
                 |
-                  (PEP\s+(?P<pepnum2>\d+))      # reference by name
+                  (PSEP\s+(?P<psepnum2>\d+))      # reference by name
                 )
                 %(end_string_suffix)s""" % locals(), re.VERBOSE),
           rfc=re.compile(
@@ -914,16 +914,16 @@ class Inliner:
         else:                   # not a valid scheme
             raise MarkupMismatch
 
-    def pep_reference(self, match, lineno):
+    def psep_reference(self, match, lineno):
         text = match.group(0)
-        if text.startswith('pep-'):
-            pepnum = int(match.group('pepnum1'))
-        elif text.startswith('PEP'):
-            pepnum = int(match.group('pepnum2'))
+        if text.startswith('psep-'):
+            psepnum = int(match.group('psepnum1'))
+        elif text.startswith('PSEP'):
+            psepnum = int(match.group('psepnum2'))
         else:
             raise MarkupMismatch
-        ref = (self.document.settings.pep_base_url
-               + self.document.settings.pep_file_url_template % pepnum)
+        ref = (self.document.settings.psep_base_url
+               + self.document.settings.psep_file_url_template % psepnum)
         unescaped = unescape(text, 0)
         return [nodes.reference(unescape(text, 1), unescaped, refuri=ref)]
 

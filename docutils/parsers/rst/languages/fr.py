@@ -82,7 +82,7 @@ roles = {
       u'exp': 'superscript',
       u'titre-r\u00E9f\u00E9rence': 'title-reference',
       u'titre': 'title-reference',
-      u'pep-r\u00E9f\u00E9rence': 'pep-reference',
+      u'psep-r\u00E9f\u00E9rence': 'psep-reference',
       u'rfc-r\u00E9f\u00E9rence': 'rfc-reference',
       u'emphase': 'emphasis',
       u'fort': 'strong',

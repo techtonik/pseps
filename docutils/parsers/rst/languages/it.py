@@ -76,7 +76,7 @@ roles = {
       'deponente': 'subscript',
       'esponente': 'superscript',
       'riferimento-titolo': 'title-reference',
-      'riferimento-pep': 'pep-reference',
+      'riferimento-psep': 'psep-reference',
       'riferimento-rfc': 'rfc-reference',
       'enfasi': 'emphasis',
       'forte': 'strong',
