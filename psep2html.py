@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""Convert PEPs to (X)HTML - courtesy of /F
+"""Convert PSEPs to (X)HTML - courtesy of /F
 
-Usage: %(PROGRAM)s [options] [<peps> ...]
+Usage: %(PROGRAM)s [options] [<pseps> ...]
 
 Options:
 
@@ -12,8 +12,8 @@ Options:
     After generating the HTML, direct your web browser to view it
     (using the Python webbrowser module).  If both -i and -b are
     given, this will browse the on-line HTML; otherwise it will
-    browse the local HTML.  If no pep arguments are given, this
-    will browse PEP 0.
+    browse the local HTML.  If no psep arguments are given, this
+    will browse PSEP 0.
 
 -i, --install
     After generating the HTML, install it and the plaintext source file
@@ -31,7 +31,7 @@ Options:
 -h, --help
     Print this help message and exit.
 
-The optional arguments ``peps`` are either pep numbers or .txt files.
+The optional arguments ``pseps`` are either psep numbers or .txt files.
 """
 
 import sys
@@ -48,13 +48,13 @@ REQUIRES = {'python': '2.2',
             'docutils': '0.2.7'}
 PROGRAM = sys.argv[0]
 RFCURL = 'http://www.faqs.org/rfcs/rfc%d.html'
-PEPURL = 'psep-%04d.html'
-PEPCVSURL = ('http://qt.gitorious.org/pyside/pseps/blobs/master/psep-%04d.txt')
-PEPDIRRUL = 'http://www.pyside.org/docs/peps/'
+PSEPURL = 'psep-%04d.html'
+PSEPCVSURL = ('http://qt.gitorious.org/pyside/pseps/blobs/master/psep-%04d.txt')
+PSEPDIRRUL = 'http://www.pyside.org/docs/pseps/'
 
 
 HOST = "dinsdale.python.org"                    # host for update
-HDIR = "/data/ftp.python.org/pub/www.python.org/peps" # target host directory
+HDIR = "/data/ftp.python.org/pub/www.python.org/pseps" # target host directory
 LOCALVARS = "Local Variables:"
 
 COMMENT = """<!--
@@ -70,7 +70,7 @@ DTD = ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"\n'
 
 fixpat = re.compile("((https?|ftp):[-_a-zA-Z0-9/.+~:?#$=&,]+)|(psep-\d+(.txt)?)|"
                     "(RFC[- ]?(?P<rfcnum>\d+))|"
-                    "(PSEP\s+(?P<pepnum>\d+))|"
+                    "(PSEP\s+(?P<psepnum>\d+))|"
                     ".")
 
 EMPTYSTRING = ''
@@ -108,8 +108,8 @@ def fixanchor(current, match):
     elif text.startswith('psep-') and text <> current:
         link = os.path.splitext(text)[0] + ".html"
     elif text.startswith('PSEP'):
-        pepnum = int(match.group('pepnum'))
-        link = PEPURL % pepnum
+        psepnum = int(match.group('psepnum'))
+        link = PSEPURL % psepnum
     elif text.startswith('RFC'):
         rfcnum = int(match.group('rfcnum'))
         link = RFCURL % rfcnum
@@ -123,35 +123,35 @@ NON_MASKED_EMAILS = [
     'pyside@lists.openbossa.org',
     ]
 
-def fixemail(address, pepno):
+def fixemail(address, psepno):
     if address.lower() in NON_MASKED_EMAILS:
         # return hyperlinked version of email address
-        return linkemail(address, pepno)
+        return linkemail(address, psepno)
     else:
         # return masked version of email address
         parts = address.split('@', 1)
         return '%s&#32;&#97;t&#32;%s' % (parts[0], parts[1])
 
 
-def linkemail(address, pepno):
+def linkemail(address, psepno):
     parts = address.split('@', 1)
     return ('<a href="mailto:%s&#64;%s?subject=PSEP%%20%s">'
             '%s&#32;&#97;t&#32;%s</a>'
-            % (parts[0], parts[1], pepno, parts[0], parts[1]))
+            % (parts[0], parts[1], psepno, parts[0], parts[1]))
 
 
 def fixfile(inpath, input_lines, outfile):
     from email.Utils import parseaddr
     basename = os.path.basename(inpath)
     infile = iter(input_lines)
-    # convert plaintext pep to minimal XHTML markup
+    # convert plaintext psep to minimal XHTML markup
     print >> outfile, DTD
     print >> outfile, '<html>'
     print >> outfile, COMMENT
     print >> outfile, '<head>'
     # head
     header = []
-    pep = ""
+    psep = ""
     title = ""
     for line in infile:
         if not line.strip():
@@ -170,9 +170,9 @@ def fixfile(inpath, input_lines, outfile):
         if key.lower() == "title":
             title = value
         elif key.lower() == "psep":
-            pep = value
-    if pep:
-        title = "PSEP " + pep + " -- " + title
+            psep = value
+    if psep:
+        title = "PSEP " + psep + " -- " + title
     if title:
         print >> outfile, '  <title>%s</title>' % cgi.escape(title)
     r = random.choice(range(64))
@@ -191,12 +191,12 @@ def fixfile(inpath, input_lines, outfile):
         '[<b><a href="http://www.pyside.org">PySide Home</a></b>]')
     if basename <> 'psep-0000.txt':
         print >> outfile, '[<b><a href=".">PSEP Index</a></b>]'
-    if pep:
+    if psep:
         try:
             print >> outfile, ('[<b><a href="psep-%04d.txt">PSEP Source</a>'
-                               '</b>]' % int(pep))
+                               '</b>]' % int(psep))
         except ValueError, error:
-            print >> sys.stderr, ('ValueError (invalid PEP number): %s'
+            print >> sys.stderr, ('ValueError (invalid PSEP number): %s'
                                   % error)
     print >> outfile, '</td></tr></table>'
     print >> outfile, '<div class="header">\n<table border="0">'
@@ -207,9 +207,9 @@ def fixfile(inpath, input_lines, outfile):
                 if '@' in part:
                     realname, addr = parseaddr(part)
                     if k.lower() == 'discussions-to':
-                        m = linkemail(addr, pep)
+                        m = linkemail(addr, psep)
                     else:
-                        m = fixemail(addr, pep)
+                        m = fixemail(addr, psep)
                     mailtos.append('%s &lt;%s&gt;' % (realname, m))
                 elif part.startswith('http:'):
                     mailtos.append(
@@ -218,24 +218,24 @@ def fixfile(inpath, input_lines, outfile):
                     mailtos.append(part)
             v = COMMASPACE.join(mailtos)
         elif k.lower() in ('replaces', 'replaced-by', 'requires'):
-            otherpeps = ''
-            for otherpep in re.split(',?\s+', v):
-                otherpep = int(otherpep)
-                otherpeps += '<a href="psep-%04d.html">%i</a> ' % (otherpep,
-                                                                  otherpep)
-            v = otherpeps
+            otherpseps = ''
+            for otherpsep in re.split(',?\s+', v):
+                otherpsep = int(otherpsep)
+                otherpseps += '<a href="psep-%04d.html">%i</a> ' % (otherpsep,
+                                                                  otherpsep)
+            v = otherpseps
         elif k.lower() in ('last-modified',):
             date = v or time.strftime('%d-%b-%Y',
                                       time.localtime(os.stat(inpath)[8]))
             try:
-                url = PEPCVSURL % int(pep)
+                url = PSEPCVSURL % int(psep)
                 v = '<a href="%s">%s</a> ' % (url, cgi.escape(date))
             except ValueError, error:
                 v = date
         elif k.lower() in ('content-type',):
-            url = PEPURL % 9
-            pep_type = v or 'text/plain'
-            v = '<a href="%s">%s</a> ' % (url, cgi.escape(pep_type))
+            url = PSEPURL % 9
+            psep_type = v or 'text/plain'
+            v = '<a href="%s">%s</a> ' % (url, cgi.escape(psep_type))
         else:
             v = cgi.escape(v)
         print >> outfile, '  <tr><th>%s:&nbsp;</th><td>%s</td></tr>' \
@@ -258,12 +258,12 @@ def fixfile(inpath, input_lines, outfile):
         elif not line.strip() and need_pre:
             continue
         else:
-            # PEP 0 has some special treatment
+            # PSEP 0 has some special treatment
             if basename == 'psep-0000.txt':
                 parts = line.split()
                 if len(parts) > 1 and re.match(r'\s*\d{1,4}', parts[1]):
-                    # This is a PEP summary line, which we need to hyperlink
-                    url = PEPURL % int(parts[1])
+                    # This is a PSEP summary line, which we need to hyperlink
+                    url = PSEPURL % int(parts[1])
                     if need_pre:
                         print >> outfile, '<pre>'
                         need_pre = 0
@@ -273,8 +273,8 @@ def fixfile(inpath, input_lines, outfile):
                         line, 1),
                     continue
                 elif parts and '@' in parts[-1]:
-                    # This is a pep email address line, so filter it.
-                    url = fixemail(parts[-1], pep)
+                    # This is a psep email address line, so filter it.
+                    url = fixemail(parts[-1], psep)
                     if need_pre:
                         print >> outfile, '<pre>'
                         need_pre = 0
@@ -297,39 +297,39 @@ docutils_settings = None
 """Runtime settings object used by Docutils.  Can be set by the client
 application when this module is imported."""
 
-def fix_rst_pep(inpath, input_lines, outfile):
+def fix_rst_psep(inpath, input_lines, outfile):
     from docutils import core
     output = core.publish_string(
         source=''.join(input_lines),
         source_path=inpath,
         destination_path=outfile.name,
-        reader_name='pep',
+        reader_name='psep',
         parser_name='restructuredtext',
-        writer_name='pep_html',
+        writer_name='psep_html',
         settings=docutils_settings,
         # Allow Docutils traceback if there's an exception:
         settings_overrides={'traceback': 1})
     outfile.write(output)
 
 
-def get_pep_type(input_lines):
+def get_psep_type(input_lines):
     """
     Return the Content-Type of the input.  "text/plain" is the default.
-    Return ``None`` if the input is not a PEP.
+    Return ``None`` if the input is not a PSEP.
     """
-    pep_type = None
+    psep_type = None
     for line in input_lines:
         line = line.rstrip().lower()
         if not line:
             # End of the RFC 2822 header (first blank line).
             break
         elif line.startswith('content-type: '):
-            pep_type = line.split()[1] or 'text/plain'
+            psep_type = line.split()[1] or 'text/plain'
             break
         elif line.startswith('psep: '):
-            # Default PEP type, used if no explicit content-type specified:
-            pep_type = 'text/plain'
-    return pep_type
+            # Default PSEP type, used if no explicit content-type specified:
+            psep_type = 'text/plain'
+    return psep_type
 
 
 def get_input_lines(inpath):
@@ -337,7 +337,7 @@ def get_input_lines(inpath):
         infile = open(inpath)
     except IOError, e:
         if e.errno <> errno.ENOENT: raise
-        print >> sys.stderr, 'Error: Skipping missing PEP file:', e.filename
+        print >> sys.stderr, 'Error: Skipping missing PSEP file:', e.filename
         sys.stderr.flush()
         return None
     lines = infile.read().splitlines(1) # handles x-platform line endings
@@ -345,41 +345,41 @@ def get_input_lines(inpath):
     return lines
 
 
-def find_pep(pep_str):
+def find_psep(psep_str):
     """Find the .txt file indicated by a cmd line argument"""
-    if os.path.exists(pep_str):
-        return pep_str
-    num = int(pep_str)
+    if os.path.exists(psep_str):
+        return psep_str
+    num = int(psep_str)
     return "psep-%04d.txt" % num
 
 def make_html(inpath, verbose=0):
     input_lines = get_input_lines(inpath)
     if input_lines is None:
         return None
-    pep_type = get_pep_type(input_lines)
-    if pep_type is None:
-        print >> sys.stderr, 'Error: Input file %s is not a PEP.' % inpath
+    psep_type = get_psep_type(input_lines)
+    if psep_type is None:
+        print >> sys.stderr, 'Error: Input file %s is not a PSEP.' % inpath
         sys.stdout.flush()
         return None
-    elif not PEP_TYPE_DISPATCH.has_key(pep_type):
-        print >> sys.stderr, ('Error: Unknown PEP type for input file %s: %s'
-                              % (inpath, pep_type))
+    elif not PSEP_TYPE_DISPATCH.has_key(psep_type):
+        print >> sys.stderr, ('Error: Unknown PSEP type for input file %s: %s'
+                              % (inpath, psep_type))
         sys.stdout.flush()
         return None
-    elif PEP_TYPE_DISPATCH[pep_type] == None:
-        pep_type_error(inpath, pep_type)
+    elif PSEP_TYPE_DISPATCH[psep_type] == None:
+        psep_type_error(inpath, psep_type)
         return None
     outpath = os.path.splitext(inpath)[0] + ".html"
     if verbose:
-        print inpath, "(%s)" % pep_type, "->", outpath
+        print inpath, "(%s)" % psep_type, "->", outpath
         sys.stdout.flush()
     outfile = open(outpath, "w")
-    PEP_TYPE_DISPATCH[pep_type](inpath, input_lines, outfile)
+    PSEP_TYPE_DISPATCH[psep_type](inpath, input_lines, outfile)
     outfile.close()
     os.chmod(outfile.name, 0664)
     return outpath
 
-def push_pep(htmlfiles, txtfiles, username, verbose, local=0):
+def push_psep(htmlfiles, txtfiles, username, verbose, local=0):
     quiet = ""
     if local:
         if verbose:
@@ -398,7 +398,7 @@ def push_pep(htmlfiles, txtfiles, username, verbose, local=0):
     files = htmlfiles[:]
     files.extend(txtfiles)
     files.append("style.css")
-    files.append("pep.css")
+    files.append("psep.css")
     filelist = SPACE.join(files)
     rc = os.system("%s %s %s %s" % (copy_cmd, quiet, filelist, target))
     if rc:
@@ -408,59 +408,59 @@ def push_pep(htmlfiles, txtfiles, username, verbose, local=0):
 ##        sys.exit(rc)
 
 
-PEP_TYPE_DISPATCH = {'text/plain': fixfile,
-                     'text/x-rst': fix_rst_pep}
-PEP_TYPE_MESSAGES = {}
+PSEP_TYPE_DISPATCH = {'text/plain': fixfile,
+                     'text/x-rst': fix_rst_psep}
+PSEP_TYPE_MESSAGES = {}
 
 def check_requirements():
     # Check Python:
     try:
         from email.Utils import parseaddr
     except ImportError:
-        PEP_TYPE_DISPATCH['text/plain'] = None
-        PEP_TYPE_MESSAGES['text/plain'] = (
-            'Python %s or better required for "%%(pep_type)s" PEP '
+        PSEP_TYPE_DISPATCH['text/plain'] = None
+        PSEP_TYPE_MESSAGES['text/plain'] = (
+            'Python %s or better required for "%%(psep_type)s" PSEP '
             'processing; %s present (%%(inpath)s).'
             % (REQUIRES['python'], sys.version.split()[0]))
     # Check Docutils:
     try:
         import docutils
     except ImportError:
-        PEP_TYPE_DISPATCH['text/x-rst'] = None
-        PEP_TYPE_MESSAGES['text/x-rst'] = (
-            'Docutils not present for "%(pep_type)s" PEP file %(inpath)s.  '
+        PSEP_TYPE_DISPATCH['text/x-rst'] = None
+        PSEP_TYPE_MESSAGES['text/x-rst'] = (
+            'Docutils not present for "%(psep_type)s" PSEP file %(inpath)s.  '
             'See README.txt for installation.')
     else:
         installed = [int(part) for part in docutils.__version__.split('.')]
         required = [int(part) for part in REQUIRES['docutils'].split('.')]
         if installed < required:
-            PEP_TYPE_DISPATCH['text/x-rst'] = None
-            PEP_TYPE_MESSAGES['text/x-rst'] = (
-                'Docutils must be reinstalled for "%%(pep_type)s" PEP '
+            PSEP_TYPE_DISPATCH['text/x-rst'] = None
+            PSEP_TYPE_MESSAGES['text/x-rst'] = (
+                'Docutils must be reinstalled for "%%(psep_type)s" PSEP '
                 'processing (%%(inpath)s).  Version %s or better required; '
                 '%s present.  See README.txt for installation.'
                 % (REQUIRES['docutils'], docutils.__version__))
 
-def pep_type_error(inpath, pep_type):
-    print >> sys.stderr, 'Error: ' + PEP_TYPE_MESSAGES[pep_type] % locals()
+def psep_type_error(inpath, psep_type):
+    print >> sys.stderr, 'Error: ' + PSEP_TYPE_MESSAGES[psep_type] % locals()
     sys.stdout.flush()
 
 
-def browse_file(pep):
+def browse_file(psep):
     import webbrowser
-    file = find_pep(pep)
+    file = find_psep(psep)
     if file.endswith(".txt"):
         file = file[:-3] + "html"
     file = os.path.abspath(file)
     url = "file:" + file
     webbrowser.open(url)
 
-def browse_remote(pep):
+def browse_remote(psep):
     import webbrowser
-    file = find_pep(pep)
+    file = find_psep(psep)
     if file.endswith(".txt"):
         file = file[:-3] + "html"
-    url = PEPDIRRUL + file
+    url = PSEPDIRRUL + file
     webbrowser.open(url)
 
 
@@ -500,24 +500,24 @@ def main(argv=None):
             browse = 1
 
     if args:
-        peptxt = []
+        pseptxt = []
         html = []
-        for pep in args:
-            file = find_pep(pep)
-            peptxt.append(file)
+        for psep in args:
+            file = find_psep(psep)
+            pseptxt.append(file)
             newfile = make_html(file, verbose=verbose)
             if newfile:
                 html.append(newfile)
                 if browse and not update:
-                    browse_file(pep)
+                    browse_file(psep)
     else:
         # do them all
-        peptxt = []
+        pseptxt = []
         html = []
         files = glob.glob("psep-*.txt")
         files.sort()
         for file in files:
-            peptxt.append(file)
+            pseptxt.append(file)
             newfile = make_html(file, verbose=verbose)
             if newfile:
                 html.append(newfile)
@@ -525,11 +525,11 @@ def main(argv=None):
             browse_file("0")
 
     if update:
-        push_pep(html, peptxt, username, verbose, local=local)
+        push_psep(html, pseptxt, username, verbose, local=local)
         if browse:
             if args:
-                for pep in args:
-                    browse_remote(pep)
+                for psep in args:
+                    browse_remote(psep)
             else:
                 browse_remote("0")
 

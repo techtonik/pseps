@@ -1,15 +1,15 @@
 #! /bin/sh
 
 # This script is meant to be run by cron regularly on the
-# www.python.org server to avoid letting the online PEPs get stale.
+# www.python.org server to avoid letting the online PSEPs get stale.
 # Before using it, the user whose account it is run under needs to use
 # the "cvs login" command to log into the Python CVS server as
 # anonymous.
 
 TMPDIR="/tmp"
-WORKDIR="peps-$$"
+WORKDIR="pseps-$$"
 
-AUXFILES="pep.css style.css index.html"
+AUXFILES="psep.css style.css index.html"
 
 TARGETDIR='/tmp/www.pyside.org/docs/pseps/luck'
 
@@ -18,14 +18,14 @@ GITROOT='git://gitorious.org/pyside/pseps.git'
 #export CVSROOT
 
 cd "$TMPDIR" || exit $?
-#cvs -Q checkout -d "$WORKDIR" python/nondist/peps || exit $?
+#cvs -Q checkout -d "$WORKDIR" python/nondist/pseps || exit $?
 git clone --depth 1 $GITROOT "$WORKDIR"
 
 cd "$WORKDIR" || exit $?
-#python ./pep2html.py -q || exit $?
+#python ./psep2html.py -q || exit $?
 make -s all || exit $?
 
-# This loop avoids modifying the files for an unchanged PEP.
+# This loop avoids modifying the files for an unchanged PSEP.
 # The HTML file is treated a little strangely since it contains the
 # (pseudo-)random selection of the corner logo.
 
