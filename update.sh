@@ -11,9 +11,9 @@ WORKDIR="peps-$$"
 
 AUXFILES="pep.css style.css index.html"
 
-TARGETDIR='/tmp/www.pyside.org/docs/pseps'
+TARGETDIR='/tmp/www.pyside.org/docs/pseps/luck'
 
-GITROOT='gitorious.org:pyside/pseps.git'
+GITROOT='git://gitorious.org/pyside/pseps.git'
 #CVSROOT=':pserver:anonymous@cvs.python.sourceforge.net:/cvsroot/python'
 #export CVSROOT
 
@@ -53,7 +53,7 @@ for FILE in psep-*.txt ; do
     done
 done
 
-for FILE in "$AUXFILES" ; do
+for FILE in $AUXFILES; do
     if [ -e "$FILE" ] ; then
         if [ -e "$TARGETDIR/$FILE" ] ; then
             if cmp -s "$FILE" "$TARGETDIR/$FILE" ; then
