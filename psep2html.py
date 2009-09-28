@@ -191,13 +191,13 @@ def fixfile(inpath, input_lines, outfile):
         '[<b><a href="http://www.pyside.org">PySide Home</a></b>]')
     if basename <> 'psep-0000.txt':
         print >> outfile, '[<b><a href=".">PSEP Index</a></b>]'
-    if psep:
-        try:
-            print >> outfile, ('[<b><a href="psep-%04d.txt">PSEP Source</a>'
-                               '</b>]' % int(psep))
-        except ValueError, error:
-            print >> sys.stderr, ('ValueError (invalid PSEP number): %s'
-                                  % error)
+#    if psep:
+#        try:
+#            print >> outfile, ('[<b><a href="psep-%04d.txt">PSEP Source</a>'
+#                               '</b>]' % int(psep))
+#        except ValueError, error:
+#            print >> sys.stderr, ('ValueError (invalid PSEP number): %s'
+#                                  % error)
     print >> outfile, '</td></tr></table>'
     print >> outfile, '<div class="header">\n<table border="0">'
     for k, v in header:
