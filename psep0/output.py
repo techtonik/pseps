@@ -1,17 +1,17 @@
-"""Code to handle the output of PEP 0."""
+"""Code to handle the output of PSEP 0."""
 import sys
 import unicodedata
 
 from operator import attrgetter
 
 from . import constants
-from .pep import PEP, PEPError
+from .psep import PSEP, PSEPError
 
 
 indent = u' '
 
 def write_column_headers(output):
-    """Output the column headers for the PEP indices."""
+    """Output the column headers for the PSEP indices."""
     column_headers = {'status': u'', 'type': u'', 'number': u'num',
                         'title': u'title', 'authors': u'owner'}
     print>>output, constants.column_format % column_headers
@@ -21,8 +21,8 @@ def write_column_headers(output):
     print>>output, constants.column_format % underline_headers
 
 
-def sort_peps(peps):
-    """Sort PEPs into meta, informational, accepted, open, finished,
+def sort_pseps(pseps):
+    """Sort PSEPs into meta, informational, accepted, open, finished,
     and essentially dead."""
     meta = []
     info = []
@@ -30,33 +30,33 @@ def sort_peps(peps):
     open_ = []
     finished = []
     dead = []
-    for pep in peps:
+    for psep in pseps:
         # Order of 'if' statement important.  Key Status values take precedence
         # over Type value, and vice-versa.
-        if pep.type_ == 'Process':
-            meta.append(pep)
-        elif pep.status == 'Draft':
-            open_.append(pep)
-        elif pep.status in ('Rejected', 'Withdrawn', 'Deferred',
+        if psep.type_ == 'Process':
+            meta.append(psep)
+        elif psep.status == 'Draft':
+            open_.append(psep)
+        elif psep.status in ('Rejected', 'Withdrawn', 'Deferred',
                 'Incomplete', 'Replaced'):
-            dead.append(pep)
-        elif pep.type_ == 'Informational':
-            info.append(pep)
-        elif pep.status in ('Accepted', 'Active'):
-            accepted.append(pep)
-        elif pep.status == 'Final':
-            finished.append(pep)
+            dead.append(psep)
+        elif psep.type_ == 'Informational':
+            info.append(psep)
+        elif psep.status in ('Accepted', 'Active'):
+            accepted.append(psep)
+        elif psep.status == 'Final':
+            finished.append(psep)
         else:
-            raise PEPError("unsorted (%s/%s)" %
-                           (pep.type_, pep.status),
-                           pep.filename, pep.number)
+            raise PSEPError("unsorted (%s/%s)" %
+                           (psep.type_, psep.status),
+                           psep.filename, psep.number)
     return meta, info, accepted, open_, finished, dead
 
 
-def verify_email_addresses(peps):
+def verify_email_addresses(pseps):
     authors_dict = {}
-    for pep in peps:
-        for author in pep.authors:
+    for psep in pseps:
+        for author in psep.authors:
             # If this is the first time we have come across an author, add him.
             if author not in authors_dict:
                 authors_dict[author] = [author.email]
@@ -98,7 +98,7 @@ def normalized_last_first(name):
     return len(unicodedata.normalize('NFC', name.last_first))
 
 
-def write_pep0(peps, output=sys.stdout):
+def write_psep0(pseps, output=sys.stdout):
     print>>output, constants.header
     print>>output
     print>>output, u"Introduction"
@@ -107,63 +107,63 @@ def write_pep0(peps, output=sys.stdout):
     print>>output, u"Index by Category"
     print>>output
     write_column_headers(output)
-    meta, info, accepted, open_, finished, dead = sort_peps(peps)
+    meta, info, accepted, open_, finished, dead = sort_pseps(pseps)
     print>>output
     print>>output, u" Meta-PSEPs (PSEPs about PSEPs or Processes)"
     print>>output
-    for pep in meta:
-        print>>output, unicode(pep)
+    for psep in meta:
+        print>>output, unicode(psep)
     print>>output
     print>>output, u" Other Informational PSEPs"
     print>>output
-    for pep in info:
-        print>>output, unicode(pep)
+    for psep in info:
+        print>>output, unicode(psep)
     print>>output
     print>>output, u" Accepted PSEPs (accepted; may not be implemented yet)"
     print>>output
-    for pep in accepted:
-        print>>output, unicode(pep)
+    for psep in accepted:
+        print>>output, unicode(psep)
     print>>output
     print>>output, u" Open PSEPs (under consideration)"
     print>>output
-    for pep in open_:
-        print>>output, unicode(pep)
+    for psep in open_:
+        print>>output, unicode(psep)
     print>>output
     print>>output, u" Finished PSEPs (done, implemented in code repository)"
     print>>output
-    for pep in finished:
-        print>>output, unicode(pep)
+    for psep in finished:
+        print>>output, unicode(psep)
     print>>output
     print>>output, u" Deferred, Abandoned, Withdrawn, and Rejected PSEPs"
     print>>output
-    for pep in dead:
-        print>>output, unicode(pep)
+    for psep in dead:
+        print>>output, unicode(psep)
     print>>output
     print>>output
     print>>output, u" Numerical Index"
     print>>output
     write_column_headers(output)
-    prev_pep = 0
-    for pep in peps:
-        if pep.number - prev_pep > 1:
+    prev_psep = 0
+    for psep in pseps:
+        if psep.number - prev_psep > 1:
             print>>output
-        print>>output, unicode(pep)
-        prev_pep = pep.number
+        print>>output, unicode(psep)
+        prev_psep = psep.number
     print>>output
     print>>output
     print>>output, u"Key"
     print>>output
-    for type_ in PEP.type_values:
+    for type_ in PSEP.type_values:
         print>>output, u"    %s - %s PSEP" % (type_[0], type_)
     print>>output
-    for status in PEP.status_values:
+    for status in PSEP.status_values:
         print>>output, u"    %s - %s proposal" % (status[0], status)
 
     print>>output
     print>>output
     print>>output, u"Owners"
     print>>output
-    authors_dict = verify_email_addresses(peps)
+    authors_dict = verify_email_addresses(pseps)
     max_name = max(authors_dict.keys(), key=normalized_last_first)
     max_name_len = len(max_name.last_first)
     print>>output, u"    %s  %s" % ('name'.ljust(max_name_len), 'email address')

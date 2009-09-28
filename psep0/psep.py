@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""Code for handling object representation of a PEP."""
+"""Code for handling object representation of a PSEP."""
 import re
 import textwrap
 import unicodedata
@@ -9,24 +9,24 @@ from email.parser import HeaderParser
 from . import constants
 
 
-class PEPError(Exception):
+class PSEPError(Exception):
 
-    def __init__(self, error, pep_file, pep_number=None):
-        super(PEPError, self).__init__(error)
-        self.filename = pep_file
-        self.number = pep_number
+    def __init__(self, error, psep_file, psep_number=None):
+        super(PSEPError, self).__init__(error)
+        self.filename = psep_file
+        self.number = psep_number
 
     def __str__(self):
-        error_msg = super(PEPError, self).__str__()
+        error_msg = super(PSEPError, self).__str__()
         if self.number is not None:
-            return "PEP %d: %r" % (self.number, error_msg)
+            return "PSEP %d: %r" % (self.number, error_msg)
         else:
             return "(%s): %r" % (self.filename, error_msg)
 
 
 class Author(object):
 
-    """Represent PEP authors.
+    """Represent PSEP authors.
 
     Attributes:
 
@@ -122,24 +122,24 @@ class Author(object):
                 return name_parts[-1], suffix
 
 
-class PEP(object):
+class PSEP(object):
 
-    """Representation of PEPs.
+    """Representation of PSEPs.
     
     Attributes:
 
         + number : int
-            PEP number.
+            PSEP number.
 
         + title : str
-            PEP title.
+            PSEP title.
 
         + type_ : str
-            The type of PEP.  Can only be one of the values from
-            PEP.type_values.
+            The type of PSEP.  Can only be one of the values from
+            PSEP.type_values.
 
         + status : str
-            The PEP's status.  Value must be found in PEP.status_values.
+            The PSEP's status.  Value must be found in PSEP.status_values.
 
         + authors : Sequence(Author)
             A list of the authors.
@@ -158,16 +158,16 @@ class PEP(object):
     # Valid values for the Type header.
     type_values = (u"Standards Track", u"Informational", u"Process")
     # Valid values for the Status header.
-    # Active PEPs can only be for Informational or Process PEPs.
+    # Active PSEPs can only be for Informational or Process PSEPs.
     status_values = (u"Accepted", u"Rejected", u"Withdrawn", u"Deferred", u"Final",
                      u"Active", u"Draft", u"Replaced")
 
-    def __init__(self, pep_file):
-        """Init object from an open PEP file object."""
+    def __init__(self, psep_file):
+        """Init object from an open PSEP file object."""
         # Parse the headers.
-        self.filename = pep_file
-        pep_parser = HeaderParser()
-        metadata = pep_parser.parse(pep_file)
+        self.filename = psep_file
+        psep_parser = HeaderParser()
+        metadata = psep_parser.parse(psep_file)
         header_order = iter(self.headers)
         try:
             for header_name in metadata.keys():
@@ -175,55 +175,55 @@ class PEP(object):
                 while header_name != current_header and not required:
                     current_header, required = header_order.next()
                 if header_name != current_header:
-                    raise PEPError("did not deal with "
+                    raise PSEPError("did not deal with "
                                    "%r before having to handle %r" %
                                    (header_name, current_header),
-                                   pep_file.name)
+                                   psep_file.name)
         except StopIteration:
-            raise PEPError("headers missing or out of order",
-                                pep_file.name)
+            raise PSEPError("headers missing or out of order",
+                                psep_file.name)
         required = False
         try:
             while not required:
                 current_header, required = header_order.next()
             else:
-                raise PEPError("PEP is missing its %r" % (current_header,),
-                               pep_file.name)
+                raise PSEPError("PSEP is missing its %r" % (current_header,),
+                               psep_file.name)
         except StopIteration:
             pass
-        # 'PEP'.
+        # 'PSEP'.
         try:
             self.number = int(metadata['PSEP'])
         except ValueError:
-            raise PEPParseError("PEP number isn't an integer", pep_file.name)
+            raise PSEPParseError("PSEP number isn't an integer", psep_file.name)
         # 'Title'.
         self.title = metadata['Title']
         # 'Type'.
         type_ = metadata['Type']
         if type_ not in self.type_values:
-            raise PEPError('%r is not a valid Type value' % (type_,),
-                           pep_file.name, self.number)
+            raise PSEPError('%r is not a valid Type value' % (type_,),
+                           psep_file.name, self.number)
         self.type_ = type_
         # 'Status'.
         status = metadata['Status']
         if status not in self.status_values:
             if status == "April Fool!":
-                # See PEP 401 :)
+                # See PSEP 401 :)
                 status = "Rejected"
             else:
-                raise PEPError("%r is not a valid Status value" %
-                               (status,), pep_file.name, self.number)
-        # Special case for Active PEPs.
+                raise PSEPError("%r is not a valid Status value" %
+                               (status,), psep_file.name, self.number)
+        # Special case for Active PSEPs.
         if (status == u"Active" and
                 self.type_ not in ("Process", "Informational")):
-            raise PEPError("Only Process and Informational PEPs may "
-                           "have an Active status", pep_file.name,
+            raise PSEPError("Only Process and Informational PSEPs may "
+                           "have an Active status", psep_file.name,
                            self.number)
         self.status = status
         # 'Author'.
         authors_and_emails = self._parse_author(metadata['Author'])
         if len(authors_and_emails) < 1:
-            raise PEPError("no authors found", pep_file.name,
+            raise PSEPError("no authors found", psep_file.name,
                            self.number)
         self.authors = map(Author, authors_and_emails)
 
@@ -286,8 +286,8 @@ class PEP(object):
         return wrapped_title[0] + u' ...'
 
     def __unicode__(self):
-        """Return the line entry for the PEP."""
-        pep_info = {'type': self.type_abbr, 'number': str(self.number),
+        """Return the line entry for the PSEP."""
+        psep_info = {'type': self.type_abbr, 'number': str(self.number),
                 'title': self.title_abbr, 'status': self.status_abbr,
                 'authors': self.author_abbr}
-        return constants.column_format % pep_info
+        return constants.column_format % psep_info
