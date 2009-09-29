@@ -428,16 +428,16 @@ References and Footnotes
    the Git tree, you can browse the current and past PSEP revisions here:
    http://qt.gitorious.org/pyside/pseps
 
-.. [2] PSEP 2, Procedure for Adding New Modules, Faassen
+.. [2] PEP 2, Procedure for Adding New Modules, Faassen
    (http://www.python.org/dev/peps/pep-0002)
 
-.. [4] PSEP 12, Sample reStructuredText PSEP Template, Goodger, Warsaw
+.. [4] PEP 12, Sample reStructuredText PSEP Template, Goodger, Warsaw
    (http://www.python.org/dev/peps/pep-0012)
 
 .. [5] The script referred to here is pep2pyramid.py, the successor to
    pep2html.py, both of which live in the same directory in the Git
-   tree as the PSEPs themselves.  Try ``pep2html.py --help`` for
-   details.  The URL for viewing PSEPs on the web is
+   tree as the PEPs themselves.  Try ``pep2html.py --help`` for
+   details.  The URL for viewing PEPs on the web is
    http://www.python.org/dev/peps/.
 
 .. _issue tracker:

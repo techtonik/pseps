@@ -480,7 +480,7 @@ followed by the footnote body.  For example::
     References
     ==========
 
-    .. [2] PSEP 1, "PEP Purpose and Guidelines", Warsaw, Hylton
+    .. [2] PEP 1, "PEP Purpose and Guidelines", Warsaw, Hylton
        (http://www.python.org/dev/peps/pep-0001)
 
 If you decide to provide an explicit URL for a PSEP, please use this as
@@ -500,7 +500,7 @@ form "#word", where "word" is a mnemonic consisting of alphanumerics
 plus internal hyphens, underscores, and periods (no whitespace or
 other characters are allowed).  For example::
 
-    Refer to PEP 1 [#PEP-1]_ for more information.
+    Refer to PSEP 1 [#PEP-1]_ for more information.
 
     References
     ==========
