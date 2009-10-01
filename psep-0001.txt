@@ -234,11 +234,11 @@ PSEP Formats and Templates
 As opposed to PEP, there is only one PSEP format available to authors:
 reStructuredText_.  ReStructuredText_ PSEPs allow for rich markup that
 is still quite easy to read, but results in much better-looking and more
-functional HTML.  PSEP 12 contains instructions and a template [4]_ for
+functional HTML.  PSEP 12 contains instructions and a template [2]_ for
 reStructuredText PSEPs.
 
 There is a Python script that converts PSEPs to HTML for
-viewing on the web [5]_.  reStructuredText PSEPs are parsed
+viewing on the web [3]_.  reStructuredText PSEPs are parsed
 and converted by Docutils_ code called from the script.
 
 
@@ -295,7 +295,7 @@ Informational, or Process.
 
 The format of a PSEP is specified with a Content-Type header.  The only
 acceptable values is "text/x-rst" for reStructuredText PSEPs (see PSEP
-12 [4]_).
+12 [2]_).
 
 The Created header records the date that the PSEP was assigned a
 number, while Post-History is used to record the dates of when new
@@ -428,13 +428,10 @@ References and Footnotes
    the Git tree, you can browse the current and past PSEP revisions here:
    http://qt.gitorious.org/pyside/pseps
 
-.. [2] PEP 2, Procedure for Adding New Modules, Faassen
-   (http://www.python.org/dev/peps/pep-0002)
-
-.. [4] PEP 12, Sample reStructuredText PSEP Template, Goodger, Warsaw
+.. [2] PEP 12, Sample reStructuredText PSEP Template, Goodger, Warsaw
    (http://www.python.org/dev/peps/pep-0012)
 
-.. [5] The script referred to here is pep2pyramid.py, the successor to
+.. [3] The script referred to here is pep2pyramid.py, the successor to
    pep2html.py, both of which live in the same directory in the Git
    tree as the PEPs themselves.  Try ``pep2html.py --help`` for
    details.  The URL for viewing PEPs on the web is
