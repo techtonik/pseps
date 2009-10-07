@@ -1,0 +1,149 @@
+PSEP: 5
+Title: Guidelines for implementing backwards-incompatible changes
+Version: $Revision$
+Last-Modified: $Date$
+Author: Matti Airas <matti.p.airas@nokia.com>
+Status: Draft
+Type: Process
+Content-Type: text/x-rst
+Created: 06-Oct-2009
+
+
+Abstract
+========
+
+There exists a strong interest for implementing new, partially
+backwards-incompatible API features to PySide. However, simply modifying
+the existing API would break any existing applications, so such
+modifications need to be done in a controlled manner. This PSEP sets the
+guidelines for implementing backwards-incompatible changes in PySide.
+
+Introduction
+============
+
+The idea of improving the PySide API by making it more Pythonic was
+presented already during the project launch. Soon thereafter, several
+ideas were discussed, but at that point the design process and a clear
+implementation roadmap was still undefined.
+
+The planned API update coincides temporally with plans to implement
+Python 3 support in PySide. While these changes do not necessarily
+depend on each other, Python 3 requires considerable changes in
+PySide and is backwards-incompatible by itself. As the API changes have
+a similar scope, special emphasis will be placed on whether to link the
+both breaks together or not.
+
+This PSEP discusses the different proposed update strategies together
+with their pros and cons and then proceeds to select one specific
+strategy for the PySide API updates.
+
+API Update Strategies
+=====================
+
+Changing the existing API
+-------------------------
+
+The simplest method of updating the API is just to change the existing
+API. This is obviously very simple for the developers, and there exists
+only one API at any given time. However, any existing applications
+depending on PySide would need to be constantly updated. Any amount of
+such changes would in practice discourage any developers from using
+PySide, and therefore, this approach would only be possible at the very
+early stages of any project when there are not yet any applications
+using the project.
+
+Coinciding the API break with Python 3 transition
+-------------------------------------------------
+
+Python 3 is backwards incompatible with older Python versions both at
+the syntax and the standard library API levels. Since the users would
+need to adapt their code in any case, the thought of simultaneously
+updating the PySide API is an enticing one. The approach is tempting
+also from the API developers' perspective. Since Python 3 breaks the
+extension API compatibility in any case, this strategy cleanly splits
+the code to the old and the new APIs under the hood as well.
+
+On the other hand, one might argue that the tandem update strategy will
+actually be more difficult to implement in practice. Not only will there
+be changes due to the Python 3 transition, but the visible API behaviour
+will be changed as well. In practice, the two changes would need to be
+performed sequentially to implement the features in a controlled manner.
+
+The tandem update strategy would lead to a difficult upgrade path for
+existing applications. The recommended development model for upgrading
+from Python 2 to 3 is to utilize a specific ``2to3`` script to convert
+the script from Python 2.6 to the 3 syntax [#PEP-3000]_. This will not
+work if the APIs are modified in an incompatible manner at the same
+time. With the library APIs breaking simultaneously, the developer would
+have no idea whether the problems in his application are due to the
+Python or the PySide changes.
+
+When considering the alternatives, it is of importance that the tandem
+update strategy has been discouraged by Python core developers
+[#guido-re-incompat]_, to a great extent due to the reasons discussed
+above.
+
+
+Separate imports for different API versions
+-------------------------------------------
+
+The final API upgrade strategy is to disconnect the upgrade altogether
+from the Python version upgrade. In this case, the
+backwards-incompatible API would be placed in its own module. For
+example, the current ``QtCore`` library is imported using::
+
+    import PySide.QtCore
+
+The new API would then utilize a different import::
+
+    import PySideFoo.QtCoreBar
+
+This approach might arguably actually simplify implementing the new
+features as they would be only simple steps on top of the old API.
+Furthermore, Python 3 porting would only focus on the extension API
+differences instead of mixing the PySide API changes in the issue. 
+For users, separate imports would provide for a standard upgrade path,
+removing any extra barriers for upgrading to Python 3.
+
+The main drawback in this approach is the potentially increased
+maintenance effort. Two sets of APIs on two major Python versions need
+to be maintained. This may tie down the developers and decrease general
+project velocity.
+
+Selected API update strategy
+============================
+
+From the update strategy alternatives discussed in the previous section,
+the last one (separate imports for different API versions) will be
+chosen as the PySide update strategy. Having separate imports provides
+the safest upgrade path both for the internal PySide developers and for
+any projects depending on PySide. Any specifics such as the new import
+names will be dealt with in a separate PSEP.
+
+
+
+References
+==========
+
+.. [#guido-re-incompat] Python 3000 and You, Van Rossum
+   (http://www.artima.com/weblogs/viewpost.jsp?thread=227041)
+
+.. [#PEP-3000] PEP 3000, Van Rossum
+   (http://www.python.org/dev/peps/pep-3000/)
+
+
+Copyright
+=========
+
+This document has been placed in the public domain.
+
+
+
+..
+   Local Variables:
+   mode: indented-text
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70
+   coding: utf-8
+   End:
