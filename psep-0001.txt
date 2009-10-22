@@ -120,7 +120,7 @@ or a URL to same -- before it can be considered Final.
 
 PSEP authors are responsible for collecting community feedback on a PSEP
 before submitting it for review.  A PSEP that has not been discussed on
-python-list@python.org and/or python-dev@python.org will not be
+pyside@lists.openbossa.org will not be
 accepted.  However, wherever possible, long open-ended discussions on
 public mailing lists should be avoided.  Strategies to keep the
 discussions efficient include: setting up a separate SIG mailing list
