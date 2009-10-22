@@ -26,12 +26,12 @@ presented already during the project launch. Soon thereafter, several
 ideas were discussed, but at that point the design process and a clear
 implementation roadmap was still undefined.
 
-The planned API update coincides temporally with plans to implement
-Python 3 support in PySide. While these changes do not necessarily
-depend on each other, Python 3 requires considerable changes in
-PySide and is backwards-incompatible by itself. As the API changes have
-a similar scope, special emphasis will be placed on whether to link the
-both breaks together or not.
+The planned API update coincides temporally with plans to implement Python 3
+support in PySide. While these changes do not necessarily depend on each other,
+Python 3 requires considerable changes in PySide and is backwards-incompatible
+by itself. As the API changes have a similar scope, special emphasis will be
+placed on whether or not to perform both of the non-backward compatible changes
+together.
 
 This PSEP discusses the different proposed update strategies together
 with their pros and cons and then proceeds to select one specific
