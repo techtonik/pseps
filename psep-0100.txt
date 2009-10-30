@@ -1,0 +1,121 @@
+PSEP: 100
+Title: New-style Signals and Slots
+Version: $Revision$
+Last-Modified: $Date$
+Author: Matti Airas <matti.p.airas@nokia.com>
+Status: Draft
+Type: Standards Track
+Content-Type: text/x-rst
+Created: 30-Oct-2009
+
+
+Abstract
+========
+
+This PSEP describes the support of PyQt's new-style signals and slots in
+PySide. Traditionally PyQt, and by extension PySide, has required the
+use of C++ function signature strings in connecting signals to slots.
+This has been widely regarded as unwieldy and non-Pythonic. A new-style
+signal and slot support was introduced in PyQt 4.5, in which the signals
+and slots may be manipulated using native Python objects and methods.
+This new syntax will be adopted to PySide with minor modifications.
+
+Rationale
+=========
+
+The PyQt's traditional syntax for signals and slots requires the use of
+explicit C++ style signal signatures [#old-style-signals]_. This has
+been regarded as unwieldy and non-Pythonic feature and an opportunity
+for improvement in the syntax. 
+
+A new-style signal and slot syntax has been introduced in PyQt 4.5
+[#new-style-signals]_. The new style provides a clean syntax to connect
+signals and slots using Python objects and methods instead of C++ style
+signature strings. An example of connecting and emitting signals using
+the new-style syntax is given below (adapted from [#new-style-signals]_)::
+
+    class Foo(QtCore.QObject):
+
+        # Define a new signal called 'trigger' that has no arguments.
+        trigger = QtCore.pyqtSignal()
+
+        def connect_and_emit_trigger(self):
+            # Connect the trigger signal to a slot.
+            self.trigger.connect(self.handle_trigger)
+
+            # Emit the signal.
+            self.trigger.emit()
+
+        def handle_trigger(self):
+            # Show that the slot has been called.
+
+            print "trigger signal received"
+
+PyQt's new-style signal and slot mechanism provides a clean, concise,
+and Pythonic syntax for defining, connecting, disconnecting, and
+emitting signals.  To maintain compatibility with PyQt, their new-style
+signal and slot mechanism will be adopted to PySide with minor
+modifications only.
+
+New Signal and Slot Syntax
+==========================
+
+PySide will adopt PyQt's new signal and slot syntax as-is. The PySide
+implementation will be functionally compatible with the PyQt 4.5 one, with
+the exceptions listed in the next Section. As PyQt compatibility will be
+the main guideline, the syntax specifics will not be described here.
+Instead, PyQt behaviour and documentation [#new-style-signals]_ shall be
+used as implementation guidelines.
+
+Differences from PyQt's syntax
+==============================
+
+PyQt's new signal and slot style utilizes method and decorator names
+specific to their implementation. These will be generalized according to
+the table below:
+
+=======  ==============  ================
+Module   PyQt function   PySide function
+=======  ==============  ================
+QtCore   pyqtSignal      signal
+QtCore   pyqtSlot        slot
+=======  ==============  ================
+
+In addition to the generalized function names, PyQt names will be
+provided as a compatibility feature. They will print out a deprecation
+warning, however.
+
+Compatibility
+=============
+
+Since the new signal and slot syntax does not break compatibility with
+the previous syntax, it will be implemented both as part of the original
+and the possible future PySide API.
+
+
+References
+==========
+
+.. [#old-style-signals] PyQt v4 Reference Manual, Section Old-style
+   Signal and Slot Support
+   (http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#old-style-signal-and-slot-support)
+
+.. [#new-style-signals] PyQt v4 Reference Manual, Section New-style
+   Signal and Slot Support
+   (http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#new-style-signal-and-slot-support)
+
+Copyright
+=========
+
+This document has been placed in the public domain.
+
+
+
+..
+   Local Variables:
+   mode: indented-text
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70
+   coding: utf-8
+   End:
