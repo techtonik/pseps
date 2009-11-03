@@ -7,6 +7,7 @@ Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 30-Oct-2009
+Post-History: 30-Oct-2009, 03-Nov-2009
 
 
 Abstract
@@ -84,6 +85,21 @@ QtCore   pyqtSlot        slot
 In addition to the generalized function names, PyQt names will be
 provided as a compatibility feature. They will print out a deprecation
 warning, however.
+
+On the mailing list discussion, concerns were raised about the proposed
+function naming scheme. One issue was the risk of Qt implementing
+similarly named C++ functions, resulting in name clashes in PySide.
+However, the risk may be regarded minor during the lifespan of Qt
+version 4. Even in the case this would happen, the issue could be
+circumvented in PySide by renaming the new C++ functions suitably.
+
+Another issue raised was the similarity of ``signal`` and ``SIGNAL`` (as
+well as ``slot`` and ``SLOT``) functions in QtCore. While the similarity
+is undeniably an issue, it could still be argued that the case
+difference is substantial enough to minimize any risk of confusion in
+practice. It could be argued that the non-Pythonic all-caps spelling
+refers to the old-style signals and slots, while the standard spelling
+refers to the Pythonic new-style signals.
 
 Compatibility
 =============
