@@ -40,6 +40,7 @@ for FILE in psep-*.txt ; do
             cp "$HTML" "$TARGETDIR/" || exit $?
         fi
     else
+        cp "$FILE" "$TARGETDIR/" || exit $?
         cp "$HTML" "$TARGETDIR/" || exit $?
     fi
     for N in "$ATT"; do
