@@ -1,5 +1,5 @@
 PSEP: 101
-Title: More Pythonic API for Python 3/PySide
+Title: Adopt PyQt's API 2 for PySide on Python 3
 Version: $Revision$
 Last-Modified: $Date$
 Author: Mark Summerfield <mark@qtrac.eu>
