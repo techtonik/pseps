@@ -12,10 +12,10 @@ Post-History: 14-Apr-2010, 15-Apr-2010, 16-Apr-2010
 Abstract
 ========
 
-PyQt4 provides two different (and incompatible) APIs. API 1 is the original
-API and the one supported by PySide. API 2 is a new Python 3-specific API
-that is much more Pythonic. This PSEP proposes that PySide adopt PyQt4's
-API 2 for when PySide is used with Python 3.
+PyQt4 provides two different (and incompatible) APIs [#PyQt-APIs]_. API
+1 is the original API and the one supported by PySide. API 2 is a new
+Python 3-specific API that is much more Pythonic. This PSEP proposes
+that PySide adopt PyQt4's API 2 for when PySide is used with Python 3.
 
 
 Rationale
@@ -87,7 +87,7 @@ Possible QVariant Extension
 Richard Dale points out that there may be cases (e.g., QtDBus), where
 the type wrapped inside a QVariant matters. In API 2, wherever a
 QVariant is passed to a function we can pass any Python object instead.
-Richard has suggested two possible syntaxes for indicating the type:
+Richard has suggested two possible syntaxes for indicating the type::
 
     function(QVariant("ushort", value)) # API 1-ish
     function(("ushort", value))         # API 2-ish
@@ -98,7 +98,7 @@ adopted, it means that tuples cannot be passed to functions accepting a
 QVariant. Lauro Moura suggested supporting both the above syntaxes.
 
 It is possible to keep QVariant out of API 2 and still be able to solve
-the problem that Richard raised. Here is an alternative syntax:
+the problem that Richard raised. Here is an alternative syntax::
 
     function(qVariant("ushort", value))
 
@@ -175,7 +175,7 @@ PySide should not offer such a mechanism, but should instead support API
 1 for Python 2.x and API 2 for Python 3.x to avoid confusion. (If users
 demanded an API changing mechanism, it could be added later.)
 
-This means that there is a simple logical rule:
+This means that there is a simple logical rule::
 
     Python 2 == API 1
     Python 3 == API 2
@@ -203,10 +203,10 @@ porting burden.
 References
 ==========
 
-`PyQt v4 Reference Manual: Potential Incompatibilities section, Selecting
-Incompatible APIs section, Support for Keyword Arguments section, and
-Support for Qt Properties section
-<http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html/>`_.
+.. [#PyQt-APIs] PyQt v4 Reference Manual: Potential Incompatibilities
+   section, Selecting Incompatible APIs section, Support for Keyword
+   Arguments section, and Support for Qt Properties section
+   (http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html)
 
 
 Contributors
