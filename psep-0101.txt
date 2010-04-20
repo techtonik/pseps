@@ -1,5 +1,5 @@
 PSEP: 101
-Title: Adopt PyQt's API 2 for PySide on Python 3
+Title: Adopt PyQt's API 2 for PySide
 Version: $Revision$
 Last-Modified: $Date$
 Author: Mark Summerfield <mark@qtrac.eu>
@@ -7,15 +7,15 @@ Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 14-Apr-2010
-Post-History: 14-Apr-2010, 15-Apr-2010, 16-Apr-2010
+Post-History: 14-Apr-2010, 15-Apr-2010, 16-Apr-2010, 20-Apr-2010
 
 Abstract
 ========
 
 PyQt4 provides two different (and incompatible) APIs [#PyQt-APIs]_. API
 1 is the original API and the one supported by PySide. API 2 is a new
-Python 3-specific API that is much more Pythonic. This PSEP proposes
-that PySide adopt PyQt4's API 2 for when PySide is used with Python 3.
+Python 3-specific API that is much more Pythonic. This PSEP proposes that
+PySide adopt PyQt4's API 2 for PySide.
 
 
 Rationale
@@ -40,19 +40,47 @@ QString should be transparent and automatic. Similarly, why should
 Python programmers have to know about QVariant when that is a C++
 workaround for C++'s lack of support for duck typing etc.? Again,
 translation to/from QVariant should be transparent and automatic. API 2
-achieves this and eliminates QString and QVariant.
+achieves this and eliminates QString and (to some extent) QVariant.
 
 
-Python 3-Specific Differences
-=============================
+API 1 vs. API 2
+===============
 
 
-No QString, or QVariant
------------------------
+No QString and almost no QVariant
+---------------------------------
 
 The key difference between the APIs is that API 2 does not make QString
-or QVariant available to programmers, instead using Python 3's native
-str type for strings, and any Python class for QVariant.
+or (to some extent) QVariant available to programmers.
+
+This means using Python's native string types for strings (e.g., unicode
+for Python 2 and str for Python 3).
+
+For QVariant the situation is slightly tricky because there may be
+corner cases where we really want to specify the type (e.g., ushort),
+that is held inside the QVariant. For that reason this PSEP proposes
+adopting API 2 regarding QVariant, that is, automatic conversion to and
+from QVariant wherever QVariants must be passed as arguments and when
+QVariants are returned. But in addition, the QVariant class is kept in
+the API so that programmers can pass a QVariant explicitly if they need
+to. To support the creation of QVariants either a single factory
+function or a set of static functions would be needed, e.g.::
+
+    # static functions approach
+    QVariant QVariant.ushort(pythonObject)
+    QVariant QVariant.uint(pythonObject)
+
+    # factory function approach (based on Richard Dale's ideas)
+    QVariant QVariant("ushort", pythonObject)
+    QVariant QVariant("uint", pythonObject)
+
+The factory function is more versatile since it can be extended without
+introducing API changes.
+
+By supporting automatic conversion to and from QVariants, any Python
+object (including dicts, lists, and tuples) can be used wherever a
+QVariant is expected, so most programmers most of the time won't have to
+know or care about QVariant at all.
 
 The benefit of API 2 in this regard is that programmers never have to
 explicitly convert between QString and str, so programmers never get
@@ -62,11 +90,12 @@ programmers to pass any Python object and when a QVariant is returned
 from Qt it is automatically converted to its original Python type (with
 an invalid QVariant mapped to None).
 
-For QString, API 2 goes beyond simply replacing QString with str. In
-particular, API 2 also automatically converts QChar and QStringRef to and
-from strs. It also converts QStringList to and from a Python list of strs.
-(PyQt4's API 2 does not implement QLatin1Char, QLatin1String, or
-QStringMatcher.)
+For QString, API 2 goes beyond simply replacing QString with str (or
+unicode on Python 2). In particular, API 2 also automatically converts
+QChar and QStringRef to and from strs (or unicodes on Python 2). It also
+converts QStringList to and from a Python list of strs (list of unicodes
+on Python 2). (PyQt4's API 2 does not implement QLatin1Char,
+QLatin1String, or QStringMatcher.)
 
 Native C++/Qt QStrings are mutable, so PyQt4's API 2 has changed the
 signatures of some of the affected functions to return a str (or a tuple
@@ -79,36 +108,6 @@ QFontMetrics::width() and QFontMetrics::boundingRect() with a QChar
 argument. These were added because the width of a single character may be
 different from that of a string that contains a single character, even if
 the characters are the same.
-
-
-Possible QVariant Extension
----------------------------
-
-Richard Dale points out that there may be cases (e.g., QtDBus), where
-the type wrapped inside a QVariant matters. In API 2, wherever a
-QVariant is passed to a function we can pass any Python object instead.
-Richard has suggested two possible syntaxes for indicating the type::
-
-    function(QVariant("ushort", value)) # API 1-ish
-    function(("ushort", value))         # API 2-ish
-
-For API 2 the second syntax is the only viable one (of these two) since
-QVariant doesn't explicitly exist in API 2. However if this syntax were
-adopted, it means that tuples cannot be passed to functions accepting a
-QVariant. Lauro Moura suggested supporting both the above syntaxes.
-
-It is possible to keep QVariant out of API 2 and still be able to solve
-the problem that Richard raised. Here is an alternative syntax::
-
-    function(qVariant("ushort", value))
-
-In other words, a dedicated function, qVariant(), that _always_ takes
-two arguments (type, value). This would avoid the need to bring QVariant
-back into API 2 and would also mean that tuples (like lists and dicts)
-could be passed where a QVariant was expected without formality. With
-this syntax, in most cases Python programmers would just pass Python
-objects where QVariants were required, but in those rare cases where the
-C++ type matters, the qVariant() function could be used.
 
 
 Changes to Other Types
@@ -136,8 +135,8 @@ Support for Keyword Arguments
 PyQt 4.7 adds support for keyword arguments which is very convenient and
 much more Pythonic.
 
-This change is not Python 3-specific, but it does represent an extension to
-the PyQt APIs that a compatible PySide ought to implement.
+This change represents an extension to the PyQt APIs that a compatible
+PySide ought to implement.
 
 One problem with this is that while changes to argument names don't affect
 C++/Qt, they would break the Python API. Furthermore, since changing
@@ -153,51 +152,17 @@ PyQt provides the pyqtConfigure() method for all objects that have
 Qt properties: this method can be called at any time and the object's Qt
 properties set by passing it keyword arguments.
 
-(This feature could be put in a separate PSEP since it is not Python
-3-specific.)
-
-
-Changing APIs
-=============
-
-API 1 is the default for PyQt 4.x with Python 2.x, and for PyQt 4.0-4.5
-with Python 3.x, and is the API used by PySide.
-
-API 2 is the default for PyQt 4.6+ with Python 3.x.
-
-PyQt provides a means of changing the API on a per-class basis.
-
-PySide could offer a similar mechanism, but this would mean that
-programmers might end up with Python 3/PySide programs that used the two
-different APIs, one in some modules, and the other in other modules.
-
-PySide should not offer such a mechanism, but should instead support API
-1 for Python 2.x and API 2 for Python 3.x to avoid confusion. (If users
-demanded an API changing mechanism, it could be added later.)
-
-This means that there is a simple logical rule::
-
-    Python 2 == API 1
-    Python 3 == API 2
-
-Matti Airas pointed out a disadvantage of this simplicity: that it means
-that large applications need to be ported in one big go rather than
-module by module (which using a PyQt-like API changing API would allow).
-However, Detlev Offenbach questioned how difficult it would be in
-practice, even with a large application. He cited the example of the
-Eric IDE (which is v. large), pointing out that the conversion from
-Python 2 with PyQt API 1 to Python 3 with API 2 took only three weeks,
-with most of the problems unrelated to Python 3 or API 2.
-
 
 Compatibility
 =============
 
 The proposed API 2 is incompatible with API 1, but since PySide is not
-available for Python 3 yet, the incompatibility will only affect those
-porting from Python 2 to Python 3. Such porting affects Python programs
-generally, and also PyQt programs, so does not add to (or reduce) the
-porting burden.
+yet widely used and hasn't reached version 1.0.0, it seems reasonable to
+break compatibility for the sake of getting PySide "right". Furthermore,
+if API 2 is adopted it means that PySide programs will have the same API
+whether Python 2 or Python 3 is used which will make it much easier for
+those who start out with PySide and Python 2 and later on port to Python
+3---something that isn't so easy with PyQt.
 
 
 References
@@ -217,10 +182,13 @@ retained in API 2.
 
 Richard Dale and Lauro Moura gave suggestions regarding QVariant.
 
-The section of Exceptions was dropped as a result of feedback from Matti
-Airas; Matti also added to the discussion on Changing APIs.
+Hugo Lima proposed choosing one of PyQt's alternative APIs and implementing
+only that for both Python 2 and Python 3 PySide versions.
 
-Detlev Offenbach also contributed to the discussion on Changing APIs.
+The section of Exceptions was dropped as a result of feedback from Matti
+Airas; Matti also added to the discussion in numerous ways.
+
+Detlev Offenbach also contributed to the discussion on Compatibility.
 
 
 Copyright
