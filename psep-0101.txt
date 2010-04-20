@@ -12,7 +12,7 @@ Post-History: 14-Apr-2010, 15-Apr-2010, 16-Apr-2010, 20-Apr-2010
 Abstract
 ========
 
-PyQt4 provides two different (and incompatible) APIs [#PyQt-APIs]_. API
+PyQt4 provides two different (and incompatible) APIs. API
 1 is the original API and the one supported by PySide. API 2 is a new
 Python 3-specific API that is much more Pythonic. This PSEP proposes that
 PySide adopt PyQt4's API 2 for PySide.
@@ -21,9 +21,10 @@ PySide adopt PyQt4's API 2 for PySide.
 Rationale
 =========
 
-API 1 is useful for those using PySide to prototype C++/Qt programs since
+PyQt4 provides two different (and incompatbile) APIs [#PyQt-APIs]_. API
+1 is useful for those using PyQt4 to prototype C++/Qt programs since
 it is very close to the C++/Qt API. However, for those who want to create
-PySide programs in their own right, and especially for existing Python
+Python Qt programs in their own right, and especially for existing Python
 programmers, API 1 is cumbersome and un-Pythonic when it comes to handling
 QStrings and QVariants, both of which are used a lot.
 
