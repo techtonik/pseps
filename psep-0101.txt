@@ -68,12 +68,12 @@ to. To support the creation of QVariants either a single factory
 function or a set of static functions would be needed, e.g.::
 
     # static functions approach
-    QVariant QVariant.ushort(pythonObject)
-    QVariant QVariant.uint(pythonObject)
+    QVariant.ushort(pythonObject) -> QVariant
+    QVariant.uint(pythonObject) -> QVariant
 
     # factory function approach (based on Richard Dale's ideas)
-    QVariant QVariant("ushort", pythonObject)
-    QVariant QVariant("uint", pythonObject)
+    QVariant("ushort", pythonObject) -> QVariant
+    QVariant("uint", pythonObject) -> QVariant
 
 The factory function is more versatile since it can be extended without
 introducing API changes.
