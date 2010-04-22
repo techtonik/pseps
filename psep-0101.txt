@@ -64,19 +64,11 @@ adopting API 2 regarding QVariant, that is, automatic conversion to and
 from QVariant wherever QVariants must be passed as arguments and when
 QVariants are returned. But in addition, the QVariant class is kept in
 the API so that programmers can pass a QVariant explicitly if they need
-to. To support the creation of QVariants either a single factory
-function or a set of static functions would be needed, e.g.::
+to. To support the creation of QVariants a set of static functions named
+after the types in QVariant.Type are implemented, e.g.::
 
-    # static functions approach
-    QVariant.ushort(pythonObject) -> QVariant
-    QVariant.uint(pythonObject) -> QVariant
-
-    # factory function approach (based on Richard Dale's ideas)
-    QVariant("ushort", pythonObject) -> QVariant
-    QVariant("uint", pythonObject) -> QVariant
-
-The factory function is more versatile since it can be extended without
-introducing API changes.
+    QVariant.fromUInt(pythonObject) -> QVariant
+    QVariant.fromInt(pythonObject) -> QVariant
 
 By supporting automatic conversion to and from QVariants, any Python
 object (including dicts, lists, and tuples) can be used wherever a
