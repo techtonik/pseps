@@ -57,23 +57,23 @@ or (to some extent) QVariant available to programmers.
 This means using Python's native string types for strings (e.g., unicode
 for Python 2 and str for Python 3).
 
-For QVariant the situation is slightly tricky because there may be
-corner cases where we really want to specify the type (e.g., ushort),
-that is held inside the QVariant. For that reason this PSEP proposes
-adopting API 2 regarding QVariant, that is, automatic conversion to and
-from QVariant wherever QVariants must be passed as arguments and when
-QVariants are returned. But in addition, the QVariant class is kept in
-the API so that programmers can pass a QVariant explicitly if they need
-to. To support the creation of QVariants a set of static functions named
-after the types in QVariant.Type are implemented, e.g.::
-
-    QVariant.fromUInt(pythonObject) -> QVariant
-    QVariant.fromInt(pythonObject) -> QVariant
+PyQt's approach to dealing with QVariants will be mimicked: any Python
+objects are automatically converted to and from QVariants wherever
+QVariants must be passed as arguments and when QVariants are returned.
 
 By supporting automatic conversion to and from QVariants, any Python
 object (including dicts, lists, and tuples) can be used wherever a
 QVariant is expected, so most programmers most of the time won't have to
 know or care about QVariant at all.
+
+If the need arises during the implementation phase, the QVariant class
+may be kept in the API so that programmers can pass a QVariant
+explicitly if they need to. In this case, to support the creation of
+QVariants a set of static functions named after the types in
+QVariant.Type are implemented, e.g.::
+
+    QVariant.fromUInt(pythonObject) -> QVariant
+    QVariant.fromInt(pythonObject) -> QVariant
 
 The benefit of API 2 in this regard is that programmers never have to
 explicitly convert between QString and str, so programmers never get
