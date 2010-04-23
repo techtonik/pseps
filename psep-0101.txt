@@ -7,14 +7,14 @@ Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 14-Apr-2010
-Post-History: 14-Apr-2010, 15-Apr-2010, 16-Apr-2010, 20-Apr-2010
+Post-History: 14-Apr-2010, 15-Apr-2010, 16-Apr-2010, 20-Apr-2010, 22-Apr-2010
 
 Abstract
 ========
 
-PyQt4 provides two different (and incompatible) APIs. API
-1 is the original API and the one supported by PySide. API 2 is a new
-Python 3-specific API that is much more Pythonic. This PSEP proposes that
+PyQt4 provides two different (and incompatible) APIs. API 1 is the
+original API and the one supported by PySide. API 2 is a new Python
+3-specific API that is much more Pythonic. This PSEP proposes that
 PySide adopt PyQt4's API 2 for PySide.
 
 
@@ -57,7 +57,7 @@ or (to some extent) QVariant available to programmers.
 This means using Python's native string types for strings (e.g., unicode
 for Python 2 and str for Python 3).
 
-PyQt's approach to dealing with QVariants will be mimicked: any Python
+PyQt's approach to dealing with QVariants will be mimicked: Python
 objects are automatically converted to and from QVariants wherever
 QVariants must be passed as arguments and when QVariants are returned.
 
@@ -67,13 +67,13 @@ QVariant is expected, so most programmers most of the time won't have to
 know or care about QVariant at all.
 
 If the need arises during the implementation phase, the QVariant class
-may be kept in the API so that programmers can pass a QVariant
-explicitly if they need to. In this case, to support the creation of
-QVariants a set of static functions named after the types in
-QVariant.Type are implemented, e.g.::
+may be added to the API so that programmers can pass a QVariant
+explicitly if they need to. If this is done, to support the creation of
+QVariants, a set of static functions named after the types in
+QVariant.Type will need to be implemented, e.g.::
 
-    QVariant.fromUInt(pythonObject) -> QVariant
-    QVariant.fromInt(pythonObject) -> QVariant
+     QVariant.fromUInt(pythonObject) -> QVariant
+     QVariant.fromInt(pythonObject) -> QVariant
 
 The benefit of API 2 in this regard is that programmers never have to
 explicitly convert between QString and str, so programmers never get
