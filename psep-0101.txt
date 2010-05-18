@@ -134,17 +134,20 @@ PySide ought to implement.
 One problem with this is that while changes to argument names don't affect
 C++/Qt, they would break the Python API. Furthermore, since changing
 argument names is harmless in C++/Qt, such changes do take place between Qt
-versions. This means that for PySide, sensible names much be used in the
+versions. This means that for PySide, sensible names must be used in the
 first place---and stuck to. Naturally, for PyQt compatibility, PySide ought
 to use the same names as PyQt.
 
 PyQt does not integrate Python and Qt's property systems, but it does allow
 Qt properties to be set when an object is constructed using keyword
-arguments (i.e., where the keyword is the name of a Qt property). Also,
+arguments (i.e., where the keyword is the name of a Qt property). The
+same functionality will be implemented in PySide. Also,
 PyQt provides the pyqtConfigure() method for all objects that have
 Qt properties: this method can be called at any time and the object's Qt
-properties set by passing it keyword arguments.
-
+properties set by passing it keyword arguments. However, since
+essentially the same functionality is already provided by
+QObject.setProperty() and .property() methods, pyqtConfigure() will not be
+implemented as part of this PSEP.
 
 Compatibility
 =============
