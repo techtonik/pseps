@@ -3,11 +3,11 @@ Title: New-style Signals and Slots
 Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas <matti.p.airas@nokia.com>
-Status: Accepted
+Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 30-Oct-2009
-Post-History: 30-Oct-2009, 03-Nov-2009
+Post-History: 30-Oct-2009, 03-Nov-2009, 24-May-2010
 
 
 Abstract
@@ -75,29 +75,30 @@ PyQt's new signal and slot style utilizes method and decorator names
 specific to their implementation. These will be generalized according to
 the table below:
 
-=======  ==============  ================
-Module   PyQt function   PySide function
-=======  ==============  ================
-QtCore   pyqtSignal      signal
-QtCore   pyqtSlot        slot
-=======  ==============  ================
+=======  ======================  =============
+Module   PyQt factory function   PySide class
+=======  ======================  =============
+QtCore   pyqtSignal              Signal
+QtCore   pyqtSlot                Slot
+=======  ======================  =============
 
-In addition to the generalized function names, PyQt names will be
+In addition to the generalized class names, PyQt factory names will be
 provided as a compatibility feature. They will print out a deprecation
 warning, however.
 
 On the mailing list discussion, concerns were raised about the proposed
-function naming scheme. One issue was the risk of Qt implementing
-similarly named C++ functions, resulting in name clashes in PySide.
-However, the risk may be regarded minor during the lifespan of Qt
-version 4. Even in the case this would happen, the issue could be
-circumvented in PySide by renaming the new C++ functions suitably.
+naming scheme. One issue was the risk of Qt implementing similarly named
+C++ classes, resulting in name clashes in PySide.  However, the risk may
+be regarded minor during the lifespan of Qt version 4, especially now
+that the signals and slots are classes and are written in the
+capitalized form. Even in the case this would happen, the issue could be
+circumvented in PySide by renaming the new C++ classes suitably.
 
-Another issue raised was the similarity of ``signal`` and ``SIGNAL`` (as
-well as ``slot`` and ``SLOT``) functions in QtCore. While the similarity
-is undeniably an issue, it could still be argued that the case
-difference is substantial enough to minimize any risk of confusion in
-practice. It could be argued that the non-Pythonic all-caps spelling
+Another issue raised was the similarity of ``Signal`` and ``SIGNAL`` (as
+well as ``Slot`` and ``SLOT``) class and function names in QtCore. While
+the similarity is undeniably an issue, it could still be argued that the
+case difference is substantial enough to minimize any risk of confusion
+in practice. It could be argued that the non-Pythonic all-caps spelling
 refers to the old-style signals and slots, while the standard spelling
 refers to the Pythonic new-style signals.
 
@@ -119,6 +120,17 @@ References
 .. [#new-style-signals] PyQt v4 Reference Manual, Section New-style
    Signal and Slot Support
    (http://www.riverbankcomputing.co.uk/static/Docs/PyQt4/pyqt4ref.html#new-style-signal-and-slot-support)
+
+Contributors
+============
+
+Hugo Lima, Mark Summerfield, Ville M. Vainio, Paul A. Giannaros, and
+Douglas Soares de Andrade have contributed in the initial discussion of
+this PSEP.
+
+After having the PSEP already accepted, Hugo Lima pointed out a naming
+scheme inconsistency, which caused the PSEP to be redrawn to the draft
+status to have the classes properly capitalized.
 
 Copyright
 =========
