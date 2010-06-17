@@ -1,0 +1,64 @@
+PSEP: 102
+Title: Use Python properties instead of getters and setters
+Version: $Revision$
+Last-Modified: $Date$
+Author: Hugo Parente Lima <hugo.lima@openbossa.org>
+Status: Draft
+Type: Standards Track
+Content-Type: text/x-rst
+Created: 15-Jun-2010
+
+Abstract
+========
+
+Python properties are the Python way of writing what is known in the C++
+and Java world as getters and setters. This PSEP proposes the conversion
+of Qt getters and setters to Python properties.
+
+Rationale
+=========
+
+A Qt property [#QtProperties]_ is basically formed by a property name, a
+getter, and a setter method (the last one of which may be omitted for
+read-only properties).  There are other fields but none of them are
+important for the scope of this PSEP.
+
+The purpose of this PSEP is to use Python properties instead of getters
+and setters to make PySide much more attractive to Python programmers,
+avoiding the cumbersome and un-Pythonic getter/setter idiom.
+
+Property names and name clashes
+===============================
+
+The property names will be the same as the Qt property names, if
+possible.
+
+According to Qt property naming conventions, if a property is called
+``foo``, the getter is called ``foo()`` and the setter ``setFoo(...)``,
+unless ``foo`` is a boolean. In that case, the getter can be either
+``isFoo`` or ``hasFoo``, depending on the context. So the name clashes
+probably can occur only on boolean properties where the getter name is
+different from the property name. However, the Qt API was specially
+crafted to avoid these clashes. If any should occur nevertheless, the
+conflicting Python property shall be renamed to resolve the overlap.
+
+Compatibility
+=============
+
+The proposed API is incompatible with the existing PySide and PyQt API.
+Since PySide is not yet widely used and has not reached version 1.0.0, it
+seems reasonable to break compatibility for the sake of getting PySide
+"right".
+
+References
+==========
+
+.. [#QtProperties] Qt's Property System
+   (http://doc.trolltech.com/latest/properties.html)
+
+Copyright
+=========
+
+This document has been placed in the public domain.
+
+
