@@ -31,7 +31,7 @@ class Headers(Transform):
 
     default_priority = 360
 
-    psep_url = 'psep-%04d'
+    psep_url = 'psep-%04d.txt'
     psep_cvs_url = ('http://qt.gitorious.org/pyside/pseps/blobs/master'
                    '/psep-%04d.txt')
     rcs_keyword_substitutions = (
