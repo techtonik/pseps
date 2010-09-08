@@ -1,0 +1,139 @@
+PSEP: 103
+Title: Support for declaring Qt meta-object properties
+Version: $Revision$
+Last-Modified: $Date$
+Author: Matti Airas <matti.p.airas@nokia.com>
+Status: Draft
+Type: Standards Track
+Content-Type: text/x-rst
+Created: 08-Sep-2010
+Post-History: 08-Sep-2010
+
+
+Abstract
+========
+
+This PSEP describes a method to declare Qt meta-object properties in
+PySide. In a similar manner to PyQt, the new function allows for
+declaring properties which simultaneously behave both as Qt and Python
+properties, and have their setters and getters defined as Python
+functions. 
+
+Rationale
+=========
+
+The Qt meta-object system allows for declaring new properties
+with custom getters and setters, accessible from the C++ code using the
+Qt standard ``value()`` and ``setValue()`` getters and setters
+[#qtproperties]_. Properties
+are also used within the standard Qt class hierarchy, for example the Qt
+State Machine Framework uses user-defined properties to define
+object behaviour in state transitions.
+
+To access functionality requiring Qt properties, there needs to be a way
+to declare them in PySide as well. In Qt C++, properties are declared
+using the ``Q_PROPERTY()`` macro, to which the getter and setter
+functions as well as several attributes modifying the property's
+behaviour are given as arguments. In PyQt, properties are defined using
+the ``QtCore.pyqtProperty()`` function, mimicking the C++ macro
+implementation [#pyqtproperties]_. ``pyqtProperty()`` also defines a
+Python property, allowing Pythonic access to the property value.  An
+example of defining and accessing Qt Properties in PyQt is given below::
+
+    class MyObject(QObject):
+        def __init__(self,startval=42):
+            self.ppval = startval
+
+        def readPP(self):
+            return self.ppval
+
+        def setPP(self,val):
+            self.ppval = val
+
+        pp = pyqtProperty(int, readPP, setPP)
+
+    obj = MyObject()
+    obj.pp = 47
+    print obj.pp
+
+Since PyQt's property setting syntax is relatively clean and already
+well-established, the approach taken in PSEP 100 [#psep0100]_ will be
+adopted: PyQt's syntax is taken as is, but the function name will be
+changed to ``QtCore.Property``.
+
+PySide's Property Syntax
+========================
+
+PySide will adopt the property setting syntax of PyQt 4.7 as-is. The
+PySide implementation will be functionally compatible with PyQt, with
+the exception of changing the function name from ``QtCore.pyqtProperty``
+to ``QtCore.Property``. For reference, the arguments accepted by the
+function with a brief description are given in the table below:
+
+===  =========== ==============  =====================================
+\#   Name        Default value   Description
+===  =========== ==============  =====================================
+1    type                        type of the property
+2    fget        None            getter function
+3    fset        None            setter function
+4    freset      None            function used to reset the
+                                 value of the property to its
+                                 default value (only in C++)
+5    fdel        None            function for del'ing the property
+                                 (only in Python)
+6    doc         None            docstring of the property
+7    designable  True            value of Qt DESIGNABLE flag
+8    scriptable  True            value of Qt SCRIPTABLE flag
+9    stored      True            value of Qt STORED flag
+10   user        False           value of Qt USER flag
+11   constant    False           value of Qt CONSTANT flag
+12   final       False           value of Qt FINAL flag
+===  =========== ==============  =====================================
+
+Discussion
+==========
+
+An initial implementation of Qt properties in PySide has already been
+made but not announced. The present implementation is otherwise
+identical to the one described in this PSEP, except that the function
+name is ``QtCore.QProperty()``. Since this name is not consistent with
+the convention initiated in PSEP 100 [#psep0100] and it is easily
+confused with classes in Qt class hierarchy, the name ``Property()`` is
+preferred instead.
+
+Compatibility
+=============
+
+Property access is new functionality required to fully utilize some of the
+standard Qt classes. Therefore, the feature will be implemented before
+the 1.0 release.  
+
+References
+==========
+
+.. [#qtproperties] Qt's Property System
+   (http://doc.trolltech.com/4.6/properties.html)
+
+.. [#pyqtproperties] PyQt Reference Guide, section "Writing Qt Designer
+   Plugins"
+   (http://www.riverbankcomputing.com/static/Docs/PyQt4/pyqt4ref.html#writing-qt-designer-plugins)
+
+.. [#psep0100] PSEP 100: "New-style Signals and Slots", Airas
+   (http://www.pyside.org/docs/pseps/psep-0100.html)
+
+
+Copyright
+=========
+
+This document has been placed in the public domain.
+
+
+
+..
+   Local Variables:
+   mode: indented-text
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70
+   coding: utf-8
+   End:
