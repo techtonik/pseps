@@ -7,7 +7,7 @@ Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 08-Sep-2010
-Post-History: 08-Sep-2010
+Post-History: 08-Sep-2010, 13-Sep-2010
 
 
 Abstract
@@ -56,10 +56,14 @@ example of defining and accessing Qt Properties in PyQt is given below::
     obj.pp = 47
     print obj.pp
 
-Since PyQt's property setting syntax is relatively clean and already
+Since PyQt's property setting syntax is clean and already
 well-established, the approach taken in PSEP 100 [#psep0100]_ will be
 adopted: PyQt's syntax is taken as is, but the function name will be
-changed to ``QtCore.Property``.
+changed to ``QtCore.Property``. So in PySide the above example would
+differ in the last line of the class definition::
+
+	pp = Property(int, readPP, setPP)
+
 
 PySide's Property Syntax
 ========================
@@ -101,6 +105,15 @@ the convention initiated in PSEP 100 [#psep0100] and it is easily
 confused with classes in Qt class hierarchy, the name ``Property()`` is
 preferred instead.
 
+Darren Dale brought up the possibility of retaining the PyQt naming
+policy (that is, keep the ``QtCore.pyqtProperty()`` name). However, this
+would make PySide internally inconsistent, and the name incompatibility
+can be resolved by a simple assignment operator.
+
+Darren Dale also proposed a property decorator syntax for defining Qt
+Properties. This, being a separate proposal, could constitute a PSEP of
+its own instead of being included in the current one.
+
 Compatibility
 =============
 
@@ -120,6 +133,15 @@ References
 
 .. [#psep0100] PSEP 100: "New-style Signals and Slots", Airas
    (http://www.pyside.org/docs/pseps/psep-0100.html)
+
+Contributors
+============
+
+Darren Dale participated in the mailing list discussion and proposed the
+decorator syntax for setting properties.
+
+Mark Summerfield suggested indicating the PyQt syntax differences more
+clearly.
 
 
 Copyright
