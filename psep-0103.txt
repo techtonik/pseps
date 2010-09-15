@@ -3,7 +3,7 @@ Title: Support for declaring Qt meta-object properties
 Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas <matti.p.airas@nokia.com>
-Status: Draft
+Status: Accepted
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 08-Sep-2010
