@@ -3,7 +3,7 @@ Title: Guidelines for implementing backwards-incompatible changes
 Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas <matti.p.airas@nokia.com>
-Status: Draft
+Status: Active
 Type: Process
 Content-Type: text/x-rst
 Created: 06-Oct-2009
