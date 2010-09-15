@@ -3,7 +3,7 @@ Title: Adopt PyQt's API 2 for PySide
 Version: $Revision$
 Last-Modified: $Date$
 Author: Mark Summerfield <mark@qtrac.eu>
-Status: Accepted
+Status: Final
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 14-Apr-2010
