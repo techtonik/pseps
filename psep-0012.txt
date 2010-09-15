@@ -3,7 +3,7 @@ Title: Sample reStructuredText PSEP Template
 Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas <matti.p.airas@nokia.com>
-Status: Draft
+Status: Active
 Type: Process
 Content-Type: text/x-rst
 Created: 25-Sep-2009
