@@ -3,7 +3,7 @@ Title: PSEP Purpose and Guidelines
 Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas
-Status: Draft
+Status: Active
 Type: Process
 Content-Type: text/x-rst
 Created: 23-Sep-2009
