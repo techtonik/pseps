@@ -7,7 +7,7 @@ Status: Accepted
 Type: Standards Track
 Content-Type: text/x-rst
 Created: 08-Sep-2010
-Post-History: 08-Sep-2010, 13-Sep-2010
+Post-History: 08-Sep-2010, 13-Sep-2010, 20-Sep-2010
 
 
 Abstract
@@ -70,15 +70,20 @@ PySide's Property Syntax
 
 PySide will adopt the property setting syntax of PyQt 4.7 as-is. The
 PySide implementation will be functionally compatible with PyQt, with
-the exception of changing the function name from ``QtCore.pyqtProperty``
-to ``QtCore.Property``. For reference, the arguments accepted by the
-function with a brief description are given in the table below:
+two exceptions. First, the function name is changed from
+``QtCore.pyqtProperty`` to ``QtCore.Property``. Second, PyQt's reference
+documentation [#pyqtproperties]_ states that fget has a default value of
+``None``.  Since the C++ property requires a mandatory getter function,
+the default value has been removed from the PySide implementation.
+
+For reference, the arguments accepted by the function with a brief
+description are given in the table below:
 
 ===  =========== ==============  =====================================
 \#   Name        Default value   Description
 ===  =========== ==============  =====================================
 1    type                        type of the property
-2    fget        None            getter function
+2    fget                        getter function
 3    fset        None            setter function
 4    freset      None            function used to reset the
                                  value of the property to its
