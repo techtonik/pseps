@@ -6,7 +6,8 @@ Author: Matti Airas <matti.p.airas@nokia.com>
 Status: Draft
 Type: Standards Track
 Content-Type: text/x-rst
-Created: 25-Sep-2009
+Created: 19-Oct-2010
+Post-History: 19-Oct-2010, 20-Oct-2010
 
 Abstract
 ========
@@ -121,9 +122,16 @@ table below.
 ===  =========== ==============  =====================================
 
 In addition to the arguments given, the defined properties have
-``setter``, ``resetter``, and ``deleter`` attributes that
+``getter``, ``setter``, ``resetter``, and ``deleter`` attributes that
 can be used to define the respective Qt property functions for that
 property.
+
+Discussion
+==========
+
+Darren Dale noted that redefining the getter decorator is required to
+override the getter in subclasses. Consequently, a getter was added to
+the list of available attributes.
 
 Compatibility
 =============
