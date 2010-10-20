@@ -1,0 +1,164 @@
+PSEP: 104
+Title: Decorator syntax for declaring Qt meta-object properties
+Version: $Revision$
+Last-Modified: $Date$
+Author: Matti Airas <matti.p.airas@nokia.com>
+Status: Draft
+Type: Standards Track
+Content-Type: text/x-rst
+Created: 25-Sep-2009
+
+Abstract
+========
+
+This PSEP describes a method to declare Qt meta-object properties in
+PySide using an alternative syntax based on function decorators. The
+presented syntax is directly analogous to the Python property decorator
+syntax introduced in Python 2.6.
+
+Rationale
+=========
+
+Traditional Python properties can be defined using a syntax given below
+[#pythonprops]_::
+
+    class C(object):
+        def __init__(self):
+            self._x = None
+    
+        def getx(self):
+            return self._x
+        def setx(self, value):
+            self._x = value
+        def delx(self):
+            del self._x
+        x = property(getx, setx, delx, "I'm the 'x' property.")
+
+In addition to this syntax, Python introduces a decorator syntax for
+setting object properties in version 2.6::
+
+    class C(object):
+        def __init__(self):
+            self._x = None
+
+        @property
+        def x(self):
+            """I'm the 'x' property."""
+            return self._x
+
+        @x.setter
+        def x(self, value):
+            self._x = value
+
+        @x.deleter
+        def x(self):
+            del self._x
+
+Although the decorator syntax for setting properties is more verbose, it
+an be argued to be clearer than the traditional syntax.
+
+PySide has support for Qt properties as defined in PSEP 103
+[#psep0103]_. The syntax for defining Qt properties in PySide closely
+mimics the traditional Python property setting syntax above, with the
+exception that Qt properties are defined with the ``QtCore.Property``
+function, which also supports a few extra arguments compared to the
+native ``property`` function. Once defined, the PySide Qt properties are also
+usable as Python properties.
+
+To match the native property decorator syntax, a decorator syntax for
+defining Qt properties will be added to PySide as well. The syntax is
+similar to the native Python property decorator one. Recent PyQt 4.8
+snapshots also have support for a similar syntax, although that has not
+been documented.
+
+
+
+Property Decorator Syntax
+=========================
+
+The PySide Qt property decorator syntax is similar to the native Python
+property decorators, with the exception that the initial
+``QtCore.Property`` decorator is a function call, accepting any extra
+``QtCore.Property`` arguments as the decorator arguments. The example
+below illustrates how it can be used::
+
+    class C(QObject):
+        def __init__(self):
+            self._x = None
+
+        xChanged = Signal()
+
+        @Property(float, doc="I'm the 'x' property.", notify=xChanged)
+        def x(self):
+            return self._x
+
+        @x.setter
+        def x(self, value):
+            self._x = value
+
+        @x.deleter
+        def x(self):
+            del self._x
+
+The function decorated by the ``Property`` decorator defines the
+property name and acts as the property getter function.
+The possible arguments for the ``Property`` decorator are given in the
+table below.
+
+===  =========== ==============  =====================================
+\#   Name        Default value   Description
+===  =========== ==============  =====================================
+1    type                        type of the property
+2    doc         None            docstring of the property
+3    notify      None            signal emitted when the property
+                                 value changes
+4    designable  True            value of Qt DESIGNABLE flag
+5    scriptable  True            value of Qt SCRIPTABLE flag
+6    stored      True            value of Qt STORED flag
+7    user        False           value of Qt USER flag
+8    constant    False           value of Qt CONSTANT flag
+9    final       False           value of Qt FINAL flag
+===  =========== ==============  =====================================
+
+In addition to the arguments given, the defined properties have
+``setter``, ``resetter``, and ``deleter`` attributes that
+can be used to define the respective Qt property functions for that
+property.
+
+Compatibility
+=============
+
+The described functionality does not break compatibility to existing
+PySide API and can be added to PySide as soon as it has been
+implemented.
+
+References
+==========
+
+.. [#pythonprops] Reference documentation for Python "property" function
+   (http://docs.python.org/library/functions.html#property)
+
+.. [#psep0103] PSEP 103: Support for declaring Qt meta-object
+   properties, Airas (http://www.pyside.org/docs/pseps/psep-0103.html)
+
+Contributors
+============
+
+Darren Dale initially proposed the decorator property syntax on the
+PySide mailing list on 08-Sep-2010.
+
+Copyright
+=========
+
+This document has been placed in the public domain.
+
+
+
+..
+   Local Variables:
+   mode: indented-text
+   indent-tabs-mode: nil
+   sentence-end-double-space: t
+   fill-column: 70
+   coding: utf-8
+   End:
