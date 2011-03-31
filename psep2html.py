@@ -52,7 +52,7 @@ PSEPURL = 'psep-%04d.html'
 PSEPCVSURL = ('http://qt.gitorious.org/pyside/pseps/blobs/master/psep-%04d.txt')
 PSEPDIRRUL = 'http://www.pyside.org/docs/pseps/'
 
-
+
 HOST = "dinsdale.python.org"                    # host for update
 HDIR = "/data/ftp.python.org/pub/www.python.org/pseps" # target host directory
 LOCALVARS = "Local Variables:"
@@ -78,7 +78,7 @@ SPACE = ' '
 COMMASPACE = ', '
 
 
-
+
 def usage(code, msg=''):
     """Print usage message and exit.  Uses stderr if code != 0."""
     if code == 0:
@@ -91,7 +91,7 @@ def usage(code, msg=''):
     sys.exit(code)
 
 
-
+
 def fixanchor(current, match):
     text = match.group(0)
     link = None
@@ -118,9 +118,9 @@ def fixanchor(current, match):
     return cgi.escape(match.group(0)) # really slow, but it works...
 
 
-
+
 NON_MASKED_EMAILS = [
-    'pyside@lists.openbossa.org',
+    'pyside@lists.pyside.org',
     ]
 
 def fixemail(address, psepno):
@@ -139,7 +139,7 @@ def linkemail(address, psepno):
             '%s&#32;&#97;t&#32;%s</a>'
             % (parts[0], parts[1], psepno, parts[0], parts[1]))
 
-
+
 def fixfile(inpath, input_lines, outfile):
     from email.Utils import parseaddr
     basename = os.path.basename(inpath)
@@ -292,7 +292,7 @@ def fixfile(inpath, input_lines, outfile):
     print >> outfile, '</body>'
     print >> outfile, '</html>'
 
-
+
 docutils_settings = None
 """Runtime settings object used by Docutils.  Can be set by the client
 application when this module is imported."""
@@ -311,7 +311,7 @@ def fix_rst_psep(inpath, input_lines, outfile):
         settings_overrides={'traceback': 1})
     outfile.write(output)
 
-
+
 def get_psep_type(input_lines):
     """
     Return the Content-Type of the input.  "text/plain" is the default.
@@ -331,7 +331,7 @@ def get_psep_type(input_lines):
             psep_type = 'text/plain'
     return psep_type
 
-
+
 def get_input_lines(inpath):
     try:
         infile = open(inpath)
@@ -344,7 +344,7 @@ def get_input_lines(inpath):
     infile.close()
     return lines
 
-
+
 def find_psep(psep_str):
     """Find the .txt file indicated by a cmd line argument"""
     if os.path.exists(psep_str):
@@ -407,7 +407,7 @@ def push_psep(htmlfiles, txtfiles, username, verbose, local=0):
 ##    if rc:
 ##        sys.exit(rc)
 
-
+
 PSEP_TYPE_DISPATCH = {'text/plain': fixfile,
                      'text/x-rst': fix_rst_psep}
 PSEP_TYPE_MESSAGES = {}
@@ -445,7 +445,7 @@ def psep_type_error(inpath, psep_type):
     print >> sys.stderr, 'Error: ' + PSEP_TYPE_MESSAGES[psep_type] % locals()
     sys.stdout.flush()
 
-
+
 def browse_file(psep):
     import webbrowser
     file = find_psep(psep)
@@ -463,7 +463,7 @@ def browse_remote(psep):
     url = PSEPDIRRUL + file
     webbrowser.open(url)
 
-
+
 def main(argv=None):
     # defaults
     update = 0
@@ -534,6 +534,6 @@ def main(argv=None):
                 browse_remote("0")
 
 
-
+
 if __name__ == "__main__":
     main()
