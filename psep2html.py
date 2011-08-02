@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 """Convert PSEPs to (X)HTML - courtesy of /F
 
 Usage: %(PROGRAM)s [options] [<pseps> ...]
@@ -49,7 +49,7 @@ REQUIRES = {'python': '2.2',
 PROGRAM = sys.argv[0]
 RFCURL = 'http://www.faqs.org/rfcs/rfc%d.html'
 PSEPURL = 'psep-%04d.html'
-PSEPCVSURL = ('http://qt.gitorious.org/pyside/pseps/blobs/master/psep-%04d.txt')
+PSEPCVSURL = ('http://qt.gitorious.org/pyside/pseps/blobs/history/master/psep-%04d.txt')
 PSEPDIRRUL = 'http://www.pyside.org/docs/pseps/'
 
 
@@ -65,8 +65,7 @@ to templates.  DO NOT USE THIS HTML FILE AS YOUR TEMPLATE!
 
 # The generated HTML doesn't validate -- you cannot use <hr> and <h3> inside
 # <pre> tags.  But if I change that, the result doesn't look very nice...
-DTD = ('<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"\n'
-       '                      "http://www.w3.org/TR/REC-html40/loose.dtd">')
+DTD = ('<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">')
 
 fixpat = re.compile("((https?|ftp):[-_a-zA-Z0-9/.+~:?#$=&,]+)|(psep-\d+(.txt)?)|"
                     "(RFC[- ]?(?P<rfcnum>\d+))|"
@@ -146,7 +145,7 @@ def fixfile(inpath, input_lines, outfile):
     infile = iter(input_lines)
     # convert plaintext psep to minimal XHTML markup
     print >> outfile, DTD
-    print >> outfile, '<html>'
+    print >> outfile, '<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">'
     print >> outfile, COMMENT
     print >> outfile, '<head>'
     # head
@@ -177,29 +176,19 @@ def fixfile(inpath, input_lines, outfile):
         print >> outfile, '  <title>%s</title>' % cgi.escape(title)
     r = random.choice(range(64))
     print >> outfile, (
-        '  <link rel="STYLESHEET" href="style.css" type="text/css" />\n'
+        '  <link rel="STYLESHEET" href="psep.css" type="text/css" />\n'
         '</head>\n'
-        '<body bgcolor="white">\n'
-        '<table class="navigation" cellpadding="0" cellspacing="0"\n'
-        '       width="100%%" border="0">\n'
-        '<tr><td class="navicon" width="199" height="102">\n'
-        '<a href="http://www.pyside.org/" title="PySide Home Page">\n'
-        '<img src="http://www.pyside.org/wp-content/themes/'
-        'openbossa/images/logo.png" alt="[PySide]"\n'
-        ' border="0" width="199" height="102" /></a></td>\n'
-        '<td class="textlinks" align="left">\n'
-        '[<b><a href="http://www.pyside.org">PySide Home</a></b>]')
+        '<body>\n'
+        '<div id="header">\n'
+        '<a href="http://www.pyside.org/" title="Python Home Page">\n'
+        '<img src="http://www.pyside.org/wp-content/themes/openbossa/images/logo.png" alt="[PySide]"\n'
+        'border="0" width="199" height="102" /></a>\n'
+        '[<b><a href="http://www.pyside.org/">PySide Home</a></b>]\n'
+        '</div>\n'
+        '<div id="content">\n')
     if basename <> 'psep-0000.txt':
         print >> outfile, '[<b><a href=".">PSEP Index</a></b>]'
-#    if psep:
-#        try:
-#            print >> outfile, ('[<b><a href="psep-%04d.txt">PSEP Source</a>'
-#                               '</b>]' % int(psep))
-#        except ValueError, error:
-#            print >> sys.stderr, ('ValueError (invalid PSEP number): %s'
-#                                  % error)
-    print >> outfile, '</td></tr></table>'
-    print >> outfile, '<div class="header">\n<table border="0">'
+    print >> outfile, '<table border="0">'
     for k, v in header:
         if k.lower() in ('author', 'discussions-to'):
             mailtos = []
@@ -225,12 +214,12 @@ def fixfile(inpath, input_lines, outfile):
                                                                   otherpsep)
             v = otherpseps
         elif k.lower() in ('last-modified',):
-            date = v or time.strftime('%d-%b-%Y',
+            date = time.strftime('%d-%b-%Y',
                                       time.localtime(os.stat(inpath)[8]))
-            try:
+            if int(psep) != 0:
                 url = PSEPCVSURL % int(psep)
                 v = '<a href="%s">%s</a> ' % (url, cgi.escape(date))
-            except ValueError, error:
+            else:
                 v = date
         elif k.lower() in ('content-type',):
             url = PSEPURL % 9
@@ -238,12 +227,10 @@ def fixfile(inpath, input_lines, outfile):
             v = '<a href="%s">%s</a> ' % (url, cgi.escape(psep_type))
         else:
             v = cgi.escape(v)
-        print >> outfile, '  <tr><th>%s:&nbsp;</th><td>%s</td></tr>' \
+        print >> outfile, '  <tr class="field"><th class="field-name">%s:&nbsp;</th><td class="field-body">%s</td></tr>' \
               % (cgi.escape(k), v)
     print >> outfile, '</table>'
-    print >> outfile, '</div>'
     print >> outfile, '<hr />'
-    print >> outfile, '<div class="content">'
     need_pre = 1
     for line in infile:
         if line[0] == '\f':
@@ -309,6 +296,9 @@ def fix_rst_psep(inpath, input_lines, outfile):
         settings=docutils_settings,
         # Allow Docutils traceback if there's an exception:
         settings_overrides={'traceback': 1})
+
+    date = time.strftime('%d-%b-%Y', time.localtime(os.stat(inpath)[8]))
+    output = output.replace('$Date$', date)
     outfile.write(output)
 
 

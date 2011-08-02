@@ -17,6 +17,7 @@ import sys
 import os
 import re
 import time
+import popen2
 from docutils import nodes, utils, languages
 from docutils import ApplicationError, DataError
 from docutils.transforms import Transform, TransformError
@@ -32,7 +33,7 @@ class Headers(Transform):
     default_priority = 360
 
     psep_url = 'psep-%04d.txt'
-    psep_cvs_url = ('http://qt.gitorious.org/pyside/pseps/blobs/master'
+    psep_cvs_url = ('http://qt.gitorious.org/pyside/pseps/blobs/history/master'
                    '/psep-%04d.txt')
     rcs_keyword_substitutions = (
           (re.compile(r'\$' r'RCSfile: (.+),v \$$', re.IGNORECASE), r'\1'),
@@ -131,7 +132,9 @@ class Headers(Transform):
                 uri = self.document.settings.psep_base_url + self.psep_url % 12
                 para[:] = [nodes.reference('', psep_type, refuri=uri)]
             elif name == 'version' and len(body):
-                utils.clean_rcs_keywords(para, self.rcs_keyword_substitutions)
+                rev, foo = popen2.popen2('git log --no-color --oneline  psep-%04d.txt | wc -l' % psep)
+                rev = rev.readlines()[0].strip()
+                para[:] = [nodes.reference('', rev, refuri=cvs_url)]
 
 
 class Contents(Transform):

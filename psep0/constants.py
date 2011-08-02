@@ -5,7 +5,6 @@ column_format = (u' %(type)1s%(status)1s %(number)4s  %(title)-' +
 
 header = u"""PSEP: 0
 Title: Index of PySide Enhancement Proposals (PSEPs)
-Version: $Revision$
 Last-Modified: $Date$
 Author: Matti Airas <matti.p.airas@nokia.com>,
 Status: Active
@@ -25,7 +24,7 @@ references = u"""
         http://qt.gitorious.org/pyside/pseps/trees/master
 """
 
-footer = u"""
+footer = u"""
 Local Variables:
 mode: indented-text
 indent-tabs-mode: nil
