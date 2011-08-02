@@ -52,7 +52,7 @@ To use this template you must first decide whether your PSEP is going
 to be an Informational or Standards Track PSEP.  Most PSEPs are
 Standards Track because they propose a new feature for the PySide
 language or standard library.  When in doubt, read PSEP 1 for details
-or contact the PSEP editors <pyside@lists.openbossa.org>.
+or contact the PSEP editors <pyside@lists.pyside.org>.
 
 Once you've decided which type of PSEP yours is going to be, follow the
 directions below.
@@ -81,7 +81,7 @@ directions below.
 - If there is a mailing list for discussion of your new feature, add a
   Discussions-To header right after the Author header.  You should not add a
   Discussions-To header if the mailing list to be used is
-  pyside@lists.openbossa.org, or if discussions should be sent to you directly.
+  pyside@lists.pyside.org, or if discussions should be sent to you directly.
   Most Informational PSEPs don't have a Discussions-To header.
 
 - Change the Status header to "Draft".
@@ -115,7 +115,7 @@ directions below.
   TODO: How to deal with different PySide/Qt/Python versions?
 
 - Leave Post-History alone for now; you'll add dates to this header each time
-  you post your PSEP to pyside@lists.openbossa.org.  If you posted your PSEP to
+  you post your PSEP to pyside@lists.pyside.org.  If you posted your PSEP to
   the lists on August 14, 2001 and September 3, 2001, the Post-History header
   would look like::
 
@@ -146,7 +146,7 @@ directions below.
 - Leave the Emacs stanza at the end of this file alone, including the
   formfeed character ("^L", or ``\f``).
 
-- Send your PSEP submission to the PSEP editors at pyside@lists.openbossa.org.
+- Send your PSEP submission to the PSEP editors at pyside@lists.pyside.org.
 
 
 ReStructuredText PSEP Formatting Requirements
@@ -269,7 +269,7 @@ per indent level.
 Literal Blocks
 --------------
 
-..  
+..
     In the text below, double backquotes are used to denote inline
     literals.  "``::``" is written so that the colons will appear in a
     monospaced font; the backquotes (``) are markup, not part of the
@@ -627,7 +627,7 @@ Copyright
 This document has been placed in the public domain.
 
 
-
+
 ..
    Local Variables:
    mode: indented-text
