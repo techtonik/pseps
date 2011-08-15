@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 """Convert PSEPs to (X)HTML - courtesy of /F
 
 Usage: %(PROGRAM)s [options] [<pseps> ...]

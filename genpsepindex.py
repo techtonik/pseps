@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python
 """Auto-generate PSEP 0 (PSEP index).
 
 Generating the PSEP index is a multi-step process.  To begin, you must first
